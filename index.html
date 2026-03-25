@@ -2,11 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="icon.png">
     <title>ARMY Schedule Pro</title>
     <style>
-        /* ESTILOS ORIGINALES DE ARMY_SCHEDULE (FOTO 2) */
         :root {
             --bts-black: #000000;
             --bts-white: #ffffff;
@@ -36,76 +35,96 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
-            border-bottom: 1px solid var(--bts-gray-border);
+            gap: 20px;
+            border-bottom: 2px solid var(--bts-black);
         }
 
-        .header-left {
+        .header-left, .header-right {
+            flex: 1;
+            min-width: 250px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            flex: 1;
-            min-width: 200px;
         }
 
-        .header-right {
-            flex: 1;
-            min-width: 250px;
+        .header-right { align-items: flex-end; }
+
+        .title-group h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 0.9;
         }
 
-        .header-top {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-top img {
-            height: 40px;
-        }
-
-        .album-container {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .album-container:hover {
-            transform: scale(1.05);
+        .title-group p {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bts-text-muted);
+            font-weight: 600;
+            margin-top: 10px;
         }
 
         .album-container img {
-            height: 50px;
-            border-radius: 4px;
+            max-width: 100%;
+            width: 240px;
+            height: auto;
+            border: 1px solid var(--bts-gray-border);
+            display: block;
+            cursor: pointer;
         }
 
-        /* Relojes */
-        .clocks-container {
+        .clocks-wrapper {
             display: flex;
-            justify-content: space-between;
-            background: var(--bts-gray-light);
-            padding: 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--bts-black);
-            border: 1px solid var(--bts-gray-border);
+            gap: 25px;
+            margin-bottom: 10px;
         }
 
         .clock-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            width: 100px;
         }
 
-        .clock-label {
-            font-size: 0.75rem;
-            color: var(--bts-text-muted);
+        .label-box {
+            background-color: var(--bts-red);
+            width: 100%;
+            text-align: center;
+            padding: 3px 0;
+            margin-bottom: 4px;
+        }
+
+        .label-box span {
+            color: white;
+            font-weight: 900;
+            font-size: 0.7rem;
             text-transform: uppercase;
         }
 
-        /* Calendario */
-        .calendar-wrapper {
+        .clock-time {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* --- ESTILOS DEL CALENDARIO --- */
+        .calendar-container {
+            width: 220px;
             background: var(--bts-white);
+            border: 1px solid var(--bts-black);
+            padding: 10px;
+            font-size: 0.7rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--bts-gray-border);
+            padding-bottom: 5px;
         }
 
         .calendar-grid {
@@ -116,198 +135,152 @@
         }
 
         .calendar-day-head {
-            font-weight: bold;
-            font-size: 0.8rem;
+            font-weight: 900;
             color: var(--bts-text-muted);
-            padding-bottom: 5px;
+            margin-bottom: 5px;
         }
 
-        .cal-day {
-            padding: 8px 0;
-            font-size: 0.9rem;
-            position: relative;
-            background: var(--bts-gray-light);
-            border-radius: 4px;
+        .calendar-day {
+            padding: 4px 0;
+            font-weight: 600;
         }
 
-        .cal-day.today {
-            background: var(--bts-black);
-            color: var(--bts-white);
-            font-weight: bold;
-        }
-
-        .cal-day .dot {
-            height: 4px;
-            width: 4px;
+        .has-event {
             background-color: var(--bts-red);
-            border-radius: 50%;
-            display: inline-block;
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
+            color: white;
+            border-radius: 2px;
+            font-weight: 900;
         }
 
-        /* Main Content */
-        main.main-content {
-            padding: 20px;
-            flex-grow: 1;
-            padding-bottom: 100px;
+        /* --- TABLA Y EVENTOS --- */
+        .main-content {
+            padding: 0 var(--header-padding) 40px;
+            flex: 1;
+        }
+
+        .table-header, .event-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 160px 80px;
+            align-items: center;
+            gap: 15px;
         }
 
         .table-header {
-            display: grid;
-            grid-template-columns: 90px 1fr 80px 100px;
-            gap: 10px;
-            font-weight: bold;
-            color: var(--bts-text-muted);
-            font-size: 0.85rem;
-            padding-bottom: 10px;
+            padding: 15px 0;
             border-bottom: 2px solid var(--bts-black);
+            font-weight: 900;
             text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
         }
 
         .event-row {
-            display: grid;
-            grid-template-columns: 90px 1fr 80px 100px;
-            gap: 10px;
-            align-items: center;
-            padding: 15px 0;
+            padding: 20px 0;
             border-bottom: 1px solid var(--bts-gray-border);
-            font-size: 0.95rem;
         }
 
-        .event-actions {
-            display: flex;
-            gap: 5px;
-            justify-content: flex-end;
+        .event-row.past-event {
+            opacity: 0.5;
+            background: #fafafa;
         }
 
-        .action-btn {
-            background: transparent;
-            border: 1px solid var(--bts-gray-border);
-            cursor: pointer;
-            padding: 5px 8px;
-            border-radius: 4px;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
+        .past-tag {
+            font-size: 0.55rem;
+            background: #999;
+            color: white;
+            padding: 2px 4px;
+            font-weight: 900;
+            margin-left: 5px;
+            vertical-align: middle;
         }
 
-        .action-btn:hover { background: var(--bts-gray-light); }
+        .date-col { font-size: 1.2rem; font-weight: 900; text-align: center; }
+        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; }
 
-        /* Controles Inferiores */
-        .footer-controls {
-            padding: 20px;
-            position: sticky;
-            bottom: 0;
-            background: var(--bts-white);
-            border-top: 1px solid var(--bts-gray-border);
+        .info-col .event-name { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
+        .info-col button.details-trigger {
+            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); 
+            border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
         }
 
-        .add-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--bts-black);
-            color: var(--bts-white);
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            text-transform: uppercase;
+        .sync-col { display: flex; flex-direction: column; gap: 6px; }
+        .time-pill {
+            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
+            font-weight: 700; font-size: 0.75rem; border-radius: 2px;
         }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; }
 
-        /* Formulario */
-        #event-form {
-            display: none;
-            background: var(--bts-gray-light);
-            padding: 20px;
-            border-radius: 6px;
-            margin-top: 20px;
-            border: 1px solid var(--bts-gray-border);
-        }
+        .action-col { display: flex; gap: 10px; justify-content: flex-end; }
+        .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
+        .edit-btn:hover { color: var(--bts-black); }
+        .delete-btn:hover { color: var(--bts-red); }
 
-        .form-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        input {
-            padding: 12px;
-            border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
-            font-size: 0.95rem;
-        }
-
-        .save-btn {
-            background: var(--bts-black);
-            color: var(--bts-white);
-            padding: 12px;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .cancel-btn {
-            background: var(--bts-white);
-            color: var(--bts-black);
-            padding: 10px;
-            border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Modal */
+        /* MODALES */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
+        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
+        .modal-body h2 { font-size: 1.8rem; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; }
+        
+        .detail-item { margin-bottom: 15px; }
+        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); }
+        .detail-item p { font-size: 1rem; font-weight: 700; }
+
+        /* Contenedor de botones en el modal */
+        .modal-footer-actions {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 20px; 
+            align-items: stretch; /* Esto asegura que el botón de copiar tenga la misma altura que el link */
+        }
+
+        .modal-link-btn { 
+            flex: 1;
+            padding: 15px; 
+            background: black; 
+            color: white; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            display: flex;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
         }
 
-        .modal-content {
-            background: var(--bts-white);
-            padding: 30px;
-            border-radius: 6px;
-            width: 90%;
-            max-width: 400px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .modal-copy-btn {
+            width: 50px;
+            background: black;
             border: none;
-            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
 
-        /* RESPONSIVIDAD MÓVIL (Foto 1 Adaptada) */
-        @media (max-width: 600px) {
-            header { flex-direction: column; }
-            .header-right, .header-left { width: 100%; }
+        .modal-copy-btn:hover {
+            background: var(--bts-red);
+        }
+
+        #event-form { display: none; background: var(--bts-gray-light); padding: 20px; border: 2px solid var(--bts-black); margin-top: 10px; }
+        .form-grid { display: flex; flex-direction: column; gap: 12px; }
+        .form-grid input { padding: 12px; border: 1px solid #ccc; width: 100%; }
+        .save-btn { background: var(--bts-black); color: white; padding: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
+        .footer-controls { padding: 20px 0; display: flex; justify-content: center; }
+        .add-btn { background: var(--bts-black); color: white; border: none; padding: 14px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 300px; }
+
+        @media (max-width: 500px) {
             .table-header { display: none; }
-            .event-row {
-                grid-template-columns: 1fr;
-                gap: 5px;
-                border: 1px solid var(--bts-gray-border);
-                margin-bottom: 10px;
-                padding: 15px;
-                border-radius: 6px;
-            }
-            .event-actions { justify-content: flex-start; margin-top: 10px; }
+            .event-row { grid-template-columns: 60px 1fr 40px; grid-template-areas: "date info action" "date sync action"; }
+            .date-col { grid-area: date; }
+            .info-col { grid-area: info; }
+            .sync-col { grid-area: sync; flex-direction: row; gap: 10px; }
+            .action-col { grid-area: action; flex-direction: column; }
         }
     </style>
 </head>
@@ -315,32 +288,34 @@
 
     <header>
         <div class="header-left">
-            <div class="header-top">
-                <img src="arirang logo.png" alt="Arirang Logo" onerror="this.style.display='none'">
-                <div class="album-container" id="album-btn">
-                    <img src="arirang album.png" alt="Arirang Album" onerror="this.style.display='none'">
-                </div>
+            <div class="title-group">
+                <h1>Schedule</h1>
+                <p>BTS Official Event Tracker</p>
             </div>
-
-            <div class="clocks-container">
-                <div class="clock-item">
-                    <span class="clock-label">Perú 🇵🇪</span>
-                    <span id="pe-time">--:--:--</span>
-                </div>
-                <div class="clock-item">
-                    <span class="clock-label">Corea 🇰🇷</span>
-                    <span id="kr-time">--:--:--</span>
-                </div>
+            <div class="album-container">
+                <img src="arirang album.png" alt="Arirang Album">
             </div>
         </div>
 
         <div class="header-right">
-            <div class="calendar-wrapper">
+            <div class="clocks-wrapper">
+                <div class="clock-item">
+                    <div class="label-box"><span>Peru</span></div>
+                    <div id="pe-time" class="clock-time">--:--:--</div>
+                </div>
+                <div class="clock-item">
+                    <div class="label-box"><span>Korea</span></div>
+                    <div id="kr-time" class="clock-time">--:--:--</div>
+                </div>
+            </div>
+            
+            <div id="calendar-widget" class="calendar-container">
+                <div id="cal-month" class="calendar-header">Cargando...</div>
                 <div class="calendar-grid">
                     <div class="calendar-day-head">D</div>
                     <div class="calendar-day-head">L</div>
                     <div class="calendar-day-head">M</div>
-                    <div class="calendar-day-head">M</div>
+                    <div class="calendar-day-head">X</div>
                     <div class="calendar-day-head">J</div>
                     <div class="calendar-day-head">V</div>
                     <div class="calendar-day-head">S</div>
@@ -360,9 +335,13 @@
 
         <div id="events-list"></div>
 
+        <div class="footer-controls">
+            <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+        </div>
+
         <div id="event-form">
             <div class="form-grid">
-                <h3 id="form-title">NUEVO EVENTO</h3>
+                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
                 <input type="hidden" id="edit-id">
                 <input type="text" id="in-title" placeholder="Nombre del Evento">
                 <input type="datetime-local" id="in-date">
@@ -373,183 +352,13 @@
         </div>
     </main>
 
-    <div class="footer-controls">
-        <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
-    </div>
-
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <button class="close-modal" id="modal-close">&times;</button>
-            <div id="modal-body"></div>
+            <span id="modal-close" class="modal-close">×</span>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 
-    <script>
-        (function() {
-            const STORAGE_KEY = 'bts_pro_events';
-            const SPOTIFY_URL_KEY = 'bts_pro_spotify';
-            let events = [];
-
-            const loadData = () => {
-                try {
-                    const data = localStorage.getItem(STORAGE_KEY);
-                    events = data ? JSON.parse(data) : [];
-                } catch (e) { events = []; }
-            };
-
-            const saveData = () => {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-                renderEvents();
-                renderCalendar();
-            };
-
-            const updateClocks = () => {
-                const now = new Date();
-                const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Lima' });
-                const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
-                document.getElementById('pe-time').textContent = pe;
-                document.getElementById('kr-time').textContent = kr;
-            };
-
-            const renderCalendar = () => {
-                const calDays = document.getElementById('cal-days');
-                calDays.innerHTML = '';
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = now.getMonth();
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                for (let i = 0; i < firstDay; i++) calDays.innerHTML += '<div></div>';
-
-                for (let i = 1; i <= daysInMonth; i++) {
-                    const hasEvent = events.some(ev => {
-                        const d = new Date(ev.date);
-                        return d.getDate() === i && d.getMonth() === month && d.getFullYear() === year;
-                    });
-                    const isToday = (i === now.getDate() && month === now.getMonth() && year === now.getFullYear()) ? 'today' : '';
-                    calDays.innerHTML += `<div class="cal-day ${isToday}">${i}${hasEvent ? '<span class="dot"></span>' : ''}</div>`;
-                }
-            };
-
-            const renderEvents = () => {
-                const list = document.getElementById('events-list');
-                list.innerHTML = '';
-                events.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-                events.forEach((ev, idx) => {
-                    const d = new Date(ev.date);
-                    const dayStr = d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
-                    const timeStr = d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
-                    
-                    const row = document.createElement('div');
-                    row.className = 'event-row';
-                    row.innerHTML = `
-                        <div>${dayStr}</div>
-                        <div style="font-weight:500">${ev.title}</div>
-                        <div>${timeStr} Hrs</div>
-                        <div class="event-actions">
-                            <button class="action-btn" onclick="window.viewEvent(${idx})">👁️</button>
-                            <button class="action-btn" onclick="window.editEvent(${idx})">✏️</button>
-                            <button class="action-btn" onclick="window.deleteEvent(${idx})">🗑️</button>
-                        </div>
-                    `;
-                    list.appendChild(row);
-                });
-            };
-
-            // Función Spotify (Faltaba restaurar la lógica de configuración)
-            const setupSpotify = () => {
-                const btn = document.getElementById('album-btn');
-                btn.onclick = () => {
-                    const current = localStorage.getItem(SPOTIFY_URL_KEY) || "";
-                    const newUrl = prompt("Configura tu link de Spotify (Embed URL):", current);
-                    if (newUrl !== null) {
-                        localStorage.setItem(SPOTIFY_URL_KEY, newUrl);
-                        location.reload();
-                    }
-                };
-                
-                const spotifyUrl = localStorage.getItem(SPOTIFY_URL_KEY);
-                if (spotifyUrl) {
-                    const player = document.createElement('div');
-                    player.style.marginTop = "15px";
-                    player.innerHTML = `<iframe style="border-radius:12px" src="${spotifyUrl}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-                    document.querySelector('.header-left').appendChild(player);
-                }
-            };
-
-            // Global functions for actions
-            window.viewEvent = (idx) => {
-                const ev = events[idx];
-                const d = new Date(ev.date).toLocaleString('es-PE', { dateStyle: 'full', timeStyle: 'short' });
-                const modal = document.getElementById('details-modal');
-                document.getElementById('modal-body').innerHTML = `
-                    <h2>${ev.title}</h2>
-                    <p style="margin: 15px 0;"><strong>Fecha:</strong> ${d}</p>
-                    ${ev.link ? `<a href="${ev.link}" target="_blank" class="save-btn" style="display:block; text-align:center; text-decoration:none;">Ir al Link</a>` : ''}
-                `;
-                modal.style.display = 'flex';
-            };
-
-            window.editEvent = (idx) => {
-                const ev = events[idx];
-                document.getElementById('edit-id').value = idx;
-                document.getElementById('in-title').value = ev.title;
-                document.getElementById('in-date').value = ev.date;
-                document.getElementById('in-link').value = ev.link || '';
-                document.getElementById('form-title').textContent = "EDITAR EVENTO";
-                document.getElementById('event-form').style.display = 'block';
-                window.scrollTo(0, document.body.scrollHeight);
-            };
-
-            window.deleteEvent = (idx) => {
-                if(confirm("¿Eliminar este evento?")) {
-                    events.splice(idx, 1);
-                    saveData();
-                }
-            };
-
-            // Form Logic
-            document.getElementById('btn-toggle-form').onclick = () => {
-                const f = document.getElementById('event-form');
-                f.style.display = f.style.display === 'block' ? 'none' : 'block';
-                if (f.style.display === 'block') {
-                    document.getElementById('edit-id').value = '';
-                    document.getElementById('in-title').value = '';
-                    document.getElementById('in-date').value = '';
-                    document.getElementById('in-link').value = '';
-                    document.getElementById('form-title').textContent = "NUEVO EVENTO";
-                }
-            };
-
-            document.getElementById('btn-cancel').onclick = () => document.getElementById('event-form').style.display = 'none';
-
-            document.getElementById('btn-save').onclick = () => {
-                const id = document.getElementById('edit-id').value;
-                const title = document.getElementById('in-title').value;
-                const date = document.getElementById('in-date').value;
-                const link = document.getElementById('in-link').value;
-                if (!title || !date) return alert("Completa los campos");
-                
-                if (id !== "") events[id] = { title, date, link };
-                else events.push({ title, date, link });
-                
-                saveData();
-                document.getElementById('event-form').style.display = 'none';
-            };
-
-            document.getElementById('modal-close').onclick = () => document.getElementById('details-modal').style.display = 'none';
-
-            window.onload = () => {
-                loadData();
-                updateClocks();
-                renderCalendar();
-                renderEvents();
-                setupSpotify();
-                setInterval(updateClocks, 1000);
-            };
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
