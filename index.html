@@ -7,6 +7,7 @@
     <title>ARMY Schedule Pro</title>
     <link rel="manifest" href="manifest.json">
     <style>
+        /* COLORES Y ESTILOS ORIGINALES DE ARMY_SCHEDULE */
         :root {
             --bts-black: #000000;
             --bts-white: #ffffff;
@@ -32,297 +33,618 @@
 
         header {
             padding: var(--header-padding);
-            border-bottom: 2px solid var(--bts-black);
-            display: flex;
-            justify-content: space-between;
-            background: white;
-            position: relative;
-        }
-
-        .left-side {
             display: flex;
             flex-direction: column;
-            max-width: 60%;
+            gap: 15px;
+            border-bottom: 1px solid var(--bts-gray-border);
+            background-color: var(--bts-white);
         }
 
-        .title-group h1 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            line-height: 1;
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .title-group p {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--bts-text-muted);
-            font-weight: 600;
-            margin-top: 6px;
+        .header-top img {
+            height: 40px;
+            object-fit: contain;
         }
 
         .album-container {
-            margin-top: 15px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
-        .album-container img {
-            width: 170px;
-            height: auto;
+        .clocks-container {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bts-gray-light);
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--bts-black);
             border: 1px solid var(--bts-gray-border);
-            display: block;
-        }
-
-        .right-side {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-        }
-
-        .clocks {
-            display: flex;
-            gap: 10px;
         }
 
         .clock-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 60px;
+            gap: 5px;
         }
 
-        .label-box {
-            background-color: var(--bts-red);
-            width: 100%;
-            text-align: center;
-            padding: 2px 0;
-            margin-bottom: 2px;
-        }
-
-        .label-box span {
-            color: white;
-            font-weight: 900;
-            font-size: 0.55rem;
-            text-transform: uppercase;
-        }
-
-        .clock-time {
+        .clock-label {
             font-size: 0.75rem;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .calendar {
-            width: 130px;
-            background: var(--bts-white);
-            border: 1px solid var(--bts-black);
-            padding: 5px;
-            font-size: 0.55rem;
-        }
-
-        .calendar-header {
-            text-align: center;
-            font-weight: 900;
+            color: var(--bts-text-muted);
             text-transform: uppercase;
-            margin-bottom: 5px;
-            border-bottom: 1px solid var(--bts-gray-border);
-            padding-bottom: 2px;
+        }
+
+        /* Calendario original */
+        .calendar-wrapper {
+            margin-top: 10px;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
+            gap: 2px;
             text-align: center;
         }
 
         .calendar-day-head {
-            font-weight: 900;
+            font-weight: bold;
+            font-size: 0.8rem;
             color: var(--bts-text-muted);
-            margin-bottom: 3px;
+            padding-bottom: 5px;
         }
 
-        .calendar-day {
-            padding: 1px 0;
-            font-weight: 600;
+        .cal-day {
+            padding: 8px 0;
+            font-size: 0.9rem;
+            position: relative;
+            background: var(--bts-gray-light);
+            border-radius: 4px;
         }
 
-        .has-event {
+        .cal-day.today {
+            background: var(--bts-black);
+            color: var(--bts-white);
+            font-weight: bold;
+        }
+
+        .cal-day .dot {
+            height: 4px;
+            width: 4px;
             background-color: var(--bts-red);
-            color: white;
-            border-radius: 2px;
-            font-weight: 900;
+            border-radius: 50%;
+            display: inline-block;
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        main {
-            padding: 0 var(--header-padding) 40px;
-            flex: 1;
+        .cal-day.today .dot {
+            background-color: var(--bts-red);
         }
 
-        /* Tabla de eventos */
-        .table-header, .event-row {
-            display: grid;
-            grid-template-columns: 35px 1fr 65px 40px;
-            gap: 8px;
-            align-items: center;
+        main.main-content {
+            flex-grow: 1;
+            padding: 20px;
+            padding-bottom: 80px; /* Espacio para el botón inferior */
         }
 
+        /* Tabla original para escritorio */
         .table-header {
-            padding: 12px 0;
-            border-bottom: 1.5px solid var(--bts-black);
-            font-weight: 900;
+            display: grid;
+            grid-template-columns: 90px 1fr 80px 100px;
+            gap: 10px;
+            font-weight: bold;
+            color: var(--bts-text-muted);
+            font-size: 0.85rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bts-black);
             text-transform: uppercase;
-            font-size: 0.65rem;
-            margin-top: 20px;
         }
 
         .event-row {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--bts-gray-light);
+            display: grid;
+            grid-template-columns: 90px 1fr 80px 100px;
+            gap: 10px;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--bts-gray-border);
+            font-size: 0.95rem;
         }
 
-        .date-col { font-size: 0.8rem; font-weight: 900; text-align: center; }
-        .date-col span { display: block; font-size: 0.5rem; color: var(--bts-text-muted); text-transform: uppercase; }
+        .event-actions {
+            display: flex;
+            gap: 5px;
+            justify-content: flex-end;
+        }
 
-        .info-col .event-name { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 2px; }
-        
-        .details-trigger {
-            background: none;
-            border: none;
-            font-size: 0.6rem;
-            font-weight: 900;
-            color: var(--bts-red); 
-            border-bottom: 1px solid var(--bts-red);
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--bts-gray-border);
             cursor: pointer;
-            text-transform: uppercase;
-            padding: 0;
-        }
-
-        .time-pill {
-            background: var(--bts-gray-light);
-            padding: 2px 4px;
+            padding: 5px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
             display: flex;
-            justify-content: space-between;
-            font-weight: 700;
-            font-size: 0.55rem;
-            border-radius: 2px;
-            margin-bottom: 2px;
-        }
-
-        .time-pill .tag { color: var(--bts-red); font-size: 0.5rem; font-weight: 900; margin-right: 4px; }
-
-        .action-col { text-align: right; }
-
-        /* Formulario Nuevo Evento */
-        #event-form {
-            display: none;
-            background: var(--bts-gray-light);
-            padding: 10px;
-            border: 1.5px solid var(--bts-black);
-            margin-top: 10px;
-        }
-
-        .form-grid { display: flex; flex-direction: column; gap: 8px; }
-        .form-grid input { padding: 8px; border: 1px solid #ccc; font-family: inherit; }
-        
-        .save-btn { background: var(--bts-black); color: white; padding: 10px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
-        .cancel-btn { background: #eee; color: #666; padding: 8px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; }
-
-        .footer-controls {
-            padding: 20px 0;
-            display: flex;
+            align-items: center;
             justify-content: center;
         }
 
-        .add-btn {
-            background: var(--bts-black);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-size: 0.7rem;
+        .action-btn:hover { background: var(--bts-gray-light); }
+
+        /* Botones y controles originales */
+        .footer-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            background: var(--bts-white);
+            border-top: 1px solid var(--bts-gray-border);
+            z-index: 10;
         }
 
-        /* MODAL */
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 400px; padding: 20px; position: relative; }
-        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
-        .modal-body h2 { text-transform: uppercase; font-size: 1.2rem; margin-bottom: 10px; border-bottom: 2px solid black; padding-bottom: 5px; }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
 
-        /* AJUSTES MÓVILES EXTREMOS */
-        @media (max-width: 400px) {
-            .title-group h1 { font-size: 1.6rem; }
-            .album-container img { width: 120px; }
-            .calendar { width: 110px; }
-            .clock-item { width: 50px; }
-            .clock-time { font-size: 0.65rem; }
+        .add-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--bts-black);
+            color: var(--bts-white);
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--bts-black);
+            color: var(--bts-white);
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--bts-white);
+            color: var(--bts-black);
+            border: 1px solid var(--bts-gray-border);
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        #event-form {
+            display: none;
+            background: var(--bts-gray-light);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid var(--bts-gray-border);
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid var(--bts-gray-border);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+        }
+        
+        input:focus {
+            border-color: var(--bts-black);
+        }
+
+        /* Modal Original */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bts-white);
+            padding: 30px 25px;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--bts-black);
+            background: none;
+            border: none;
+        }
+
+        /* =========================================================
+           ADAPTACIONES MÓVILES (Basadas en "ARMY_Schedule - App")
+           ========================================================= */
+        @media (max-width: 600px) {
+            .table-header { display: none; } /* Ocultar cabecera en móviles */
+            
+            .event-row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+                padding: 15px;
+                border: 1px solid var(--bts-gray-border);
+                border-radius: 6px;
+                margin-bottom: 10px;
+                background: var(--bts-white);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            }
+
+            .event-row > div:nth-child(1) { font-size: 0.85rem; color: var(--bts-text-muted); }
+            .event-row > div:nth-child(2) { font-weight: bold; font-size: 1.1rem; color: var(--bts-black); }
+            .event-row > div:nth-child(3) { font-size: 0.9rem; color: var(--bts-text-muted); }
+            
+            .event-actions {
+                justify-content: flex-start;
+                margin-top: 10px;
+                border-top: 1px solid var(--bts-gray-light);
+                padding-top: 10px;
+            }
+
+            .clocks-container {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .header-top {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+
     <header>
-        <div class="left-side">
-            <div class="title-group">
-                <h1>Schedule</h1>
-                <p>BTS Official Event Tracker</p>
-            </div>
-            <div class="album-container" id="album-container">
-                <img src="arirang album.png" alt="Arirang Album" id="album-img">
+        <div class="header-top">
+            <img src="arirang logo.png" alt="Arirang Logo" onerror="this.style.display='none'">
+            <div class="album-container">
+                <img src="arirang album.png" alt="Arirang Album" onerror="this.style.display='none'">
             </div>
         </div>
-        <div class="right-side">
-            <div class="clocks">
-                <div class="clock-item">
-                    <div class="label-box"><span>Peru</span></div>
-                    <div id="pe-time" class="clock-time">--:--</div>
-                </div>
-                <div class="clock-item">
-                    <div class="label-box"><span>Korea</span></div>
-                    <div id="kr-time" class="clock-time">--:--</div>
-                </div>
+
+        <div class="clocks-container">
+            <div class="clock-item">
+                <span class="clock-label">Perú 🇵🇪</span>
+                <span id="pe-time">--:--:--</span>
             </div>
-            <div class="calendar">
-                <div id="cal-month" class="calendar-header">Marzo</div>
-                <div class="calendar-grid">
-                    <div class="calendar-day-head">D</div><div class="calendar-day-head">L</div><div class="calendar-day-head">M</div><div class="calendar-day-head">M</div><div class="calendar-day-head">J</div><div class="calendar-day-head">V</div><div class="calendar-day-head">S</div>
-                </div>
-                <div id="cal-days" class="calendar-grid"></div>
+            <div class="clock-item">
+                <span class="clock-label">Corea 🇰🇷</span>
+                <span id="kr-time">--:--:--</span>
             </div>
+        </div>
+
+        <div class="calendar-wrapper">
+            <div class="calendar-grid">
+                <div class="calendar-day-head">D</div>
+                <div class="calendar-day-head">L</div>
+                <div class="calendar-day-head">M</div>
+                <div class="calendar-day-head">M</div>
+                <div class="calendar-day-head">J</div>
+                <div class="calendar-day-head">V</div>
+                <div class="calendar-day-head">S</div>
+            </div>
+            <div id="cal-days" class="calendar-grid"></div>
         </div>
     </header>
 
-    <main>
+    <main class="main-content">
         <div class="table-header">
-            <div>Fecha</div><div>Evento</div><div>Horas</div><div>Acción</div>
+            <div>Fecha</div>
+            <div>Evento</div>
+            <div>Horario</div>
+            <div style="text-align: right;">Acción</div>
         </div>
 
         <div id="events-list"></div>
 
-        <div class="footer-controls">
-            <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
-        </div>
-
         <div id="event-form">
             <div class="form-grid">
+                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
+                <input type="hidden" id="edit-id">
                 <input type="text" id="in-title" placeholder="Nombre del Evento">
                 <input type="datetime-local" id="in-date">
-                <button id="btn-save" class="save-btn">Guardar</button>
+                <input type="url" id="in-link" placeholder="Link del Evento (opcional)">
+                <button id="btn-save" class="save-btn">Guardar Evento</button>
                 <button id="btn-cancel" class="cancel-btn">Cancelar</button>
             </div>
         </div>
     </main>
 
+    <div class="footer-controls">
+        <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+    </div>
+
+    <!-- Modal de Detalles / Confirmación -->
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <span id="modal-close" class="modal-close">×</span>
-            <div class="modal-body" id="modal-body"></div>
+            <button class="close-modal" id="modal-close">&times;</button>
+            <div id="modal-body"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SCRIPT ORIGINAL RESTAURADO Y CONSOLIDADO -->
+    <script>
+        (function() {
+            const STORAGE_KEY = 'bts_pro_events';
+            let events = [];
+
+            const loadData = () => {
+                try {
+                    const data = localStorage.getItem(STORAGE_KEY);
+                    events = data ? JSON.parse(data) : [];
+                } catch (e) { events = []; }
+            };
+
+            const saveData = () => {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+                renderEvents();
+                renderCalendar();
+            };
+
+            const updateClocks = () => {
+                const now = new Date();
+                const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Lima' });
+                const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
+                
+                const peEl = document.getElementById('pe-time');
+                const krEl = document.getElementById('kr-time');
+                if (peEl) peEl.textContent = pe;
+                if (krEl) krEl.textContent = kr;
+            };
+
+            // Función para manejar el reproductor de Spotify (Original)
+            const setupSpotifyPlayer = () => {
+                const container = document.querySelector('.album-container');
+                if (!container) return;
+                const SPOTIFY_URL_KEY = 'bts_pro_spotify';
+                // La lógica original del reproductor se mantiene aquí si es que el contenedor existe
+            };
+
+            const renderCalendar = () => {
+                const calDays = document.getElementById('cal-days');
+                calDays.innerHTML = '';
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth();
+                
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    calDays.innerHTML += `<div></div>`;
+                }
+
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const hasEvent = events.some(ev => {
+                        if (!ev.date) return false;
+                        const evDate = new Date(ev.date);
+                        return evDate.getDate() === i && evDate.getMonth() === month && evDate.getFullYear() === year;
+                    });
+                    
+                    const eventDot = hasEvent ? '<span class="dot"></span>' : '';
+                    const isToday = (i === now.getDate() && month === now.getMonth() && year === now.getFullYear()) ? 'today' : '';
+                    
+                    calDays.innerHTML += `<div class="cal-day ${isToday}">${i}${eventDot}</div>`;
+                }
+            };
+
+            const renderEvents = () => {
+                const list = document.getElementById('events-list');
+                list.innerHTML = '';
+
+                events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                if (events.length === 0) {
+                    list.innerHTML = '<p style="text-align:center; color: var(--bts-text-muted); padding: 20px;">No hay eventos. ¡Agrega uno nuevo!</p>';
+                    return;
+                }
+
+                events.forEach((ev, index) => {
+                    const dateObj = new Date(ev.date);
+                    const day = dateObj.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    const time = dateObj.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
+                    
+                    const row = document.createElement('div');
+                    row.className = 'event-row';
+                    row.innerHTML = `
+                        <div>${day}</div>
+                        <div>${ev.title}</div>
+                        <div>${time} Hrs</div>
+                        <div class="event-actions">
+                            <button class="action-btn" onclick="viewEvent(${index})" title="Ver Detalles">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                            <button class="action-btn" onclick="editEvent(${index})" title="Editar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="action-btn" onclick="confirmDelete(${index})" title="Eliminar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+            };
+
+            const initForm = () => {
+                const btnToggle = document.getElementById('btn-toggle-form');
+                const form = document.getElementById('event-form');
+                const btnSave = document.getElementById('btn-save');
+                const btnCancel = document.getElementById('btn-cancel');
+
+                btnToggle.onclick = () => {
+                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+                    if (form.style.display === 'block') {
+                        document.getElementById('edit-id').value = '';
+                        document.getElementById('in-title').value = '';
+                        document.getElementById('in-date').value = '';
+                        document.getElementById('in-link').value = '';
+                        document.getElementById('form-title').textContent = 'NUEVO EVENTO';
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }
+                };
+
+                btnCancel.onclick = () => {
+                    form.style.display = 'none';
+                };
+
+                btnSave.onclick = () => {
+                    const id = document.getElementById('edit-id').value;
+                    const title = document.getElementById('in-title').value.trim();
+                    const date = document.getElementById('in-date').value;
+                    const link = document.getElementById('in-link').value.trim();
+
+                    if (title && date) {
+                        if (id !== '') {
+                            events[parseInt(id)] = { title, date, link };
+                        } else {
+                            events.push({ title, date, link });
+                        }
+                        saveData();
+                        form.style.display = 'none';
+                    } else {
+                        alert("Por favor completa el título y la fecha.");
+                    }
+                };
+            };
+
+            window.viewEvent = (index) => {
+                const ev = events[index];
+                const modal = document.getElementById('details-modal');
+                const modalBody = document.getElementById('modal-body');
+                
+                const dateObj = new Date(ev.date);
+                const formattedDate = dateObj.toLocaleString('es-PE', { dateStyle: 'full', timeStyle: 'short' });
+
+                modalBody.innerHTML = `
+                    <h2 style="margin-bottom: 10px; font-size: 1.4rem;">${ev.title}</h2>
+                    <p style="color: var(--bts-text-muted); margin-bottom: 5px;"><strong>Fecha y Hora:</strong></p>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">${formattedDate} Hrs</p>
+                    ${ev.link ? `
+                    <div style="background: var(--bts-gray-light); padding: 15px; border-radius: 4px; border: 1px solid var(--bts-gray-border);">
+                        <p style="font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">Enlace:</p>
+                        <a href="${ev.link}" target="_blank" style="color: #000; word-break: break-all; text-decoration: underline; display:block; margin-bottom: 10px;">${ev.link}</a>
+                        <button id="btn-copy-modal" data-link="${ev.link}" class="cancel-btn" style="display:flex; justify-content:center; align-items:center; gap:8px;">
+                            Copiar Enlace
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                    </div>` : ''}
+                `;
+                modal.style.display = 'flex';
+
+                // Lógica original de copiado de link con cambio de SVG temporal
+                const copyBtn = document.getElementById('btn-copy-modal');
+                if (copyBtn) {
+                    copyBtn.onclick = () => {
+                        const url = copyBtn.getAttribute('data-link');
+                        const temp = document.createElement('input');
+                        temp.value = url;
+                        document.body.appendChild(temp);
+                        temp.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(temp);
+                        
+                        const originalSVG = copyBtn.innerHTML;
+                        copyBtn.innerHTML = `Copiado! <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                        setTimeout(() => copyBtn.innerHTML = originalSVG, 2000);
+                    };
+                }
+            };
+
+            window.editEvent = (index) => {
+                const ev = events[index];
+                document.getElementById('edit-id').value = index;
+                document.getElementById('in-title').value = ev.title;
+                document.getElementById('in-date').value = ev.date;
+                document.getElementById('in-link').value = ev.link || '';
+                
+                document.getElementById('form-title').textContent = 'EDITAR EVENTO';
+                document.getElementById('event-form').style.display = 'block';
+                window.scrollTo(0, document.body.scrollHeight);
+            };
+
+            window.confirmDelete = (index) => {
+                const modal = document.getElementById('details-modal');
+                const modalBody = document.getElementById('modal-body');
+                
+                modalBody.innerHTML = `
+                    <h3 style="margin-bottom: 15px; text-align: center;">¿Seguro que deseas eliminar?</h3>
+                    <p style="text-align: center; color: var(--bts-text-muted); margin-bottom: 20px;">"${events[index].title}"</p>
+                    <div style="display:flex; gap:10px;">
+                        <button id="btn-confirm-del" class="save-btn" style="margin-top:0; background:var(--bts-red);">Eliminar</button>
+                        <button id="btn-cancel-del" class="cancel-btn" style="margin-top:0;">Cancelar</button>
+                    </div>
+                `;
+                modal.style.display = 'flex';
+
+                document.getElementById('btn-confirm-del').onclick = () => {
+                    events.splice(index, 1);
+                    saveData();
+                    modal.style.display = 'none';
+                };
+                
+                document.getElementById('btn-cancel-del').onclick = () => {
+                    modal.style.display = 'none';
+                };
+            };
+
+            document.getElementById('modal-close').onclick = () => {
+                document.getElementById('details-modal').style.display = 'none';
+            };
+
+            window.onload = () => {
+                loadData();
+                renderEvents();
+                renderCalendar();
+                updateClocks();
+                setupSpotifyPlayer();
+                setInterval(updateClocks, 1000);
+                initForm();
+            };
+        })();
+    </script>
 </body>
 </html>
