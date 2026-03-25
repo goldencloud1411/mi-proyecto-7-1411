@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>ARMY Schedule Pro</title>
+<link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --bts-black: #000000;
+            --bts-white: #ffffff;
+            --bts-red: #ff1242; 
+            --bts-gray-light: #f6f6f6;
+            --bts-gray-border: #e0e0e0;
+            --bts-text-muted: #757575;
+            --header-padding: 20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bts-white);
+            color: var(--bts-black);
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: var(--header-padding);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            border-bottom: 2px solid var(--bts-black);
+        }
+
+        .header-left, .header-right {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .header-right { align-items: flex-end; }
+
+        .title-group h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 0.9;
+        }
+
+        .title-group p {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--bts-text-muted);
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .album-container img {
+            max-width: 100%;
+            width: 240px;
+            height: auto;
+            border: 1px solid var(--bts-gray-border);
+            display: block;
+            cursor: pointer;
+        }
+
+        .clocks-wrapper {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 10px;
+        }
+
+        .clock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+        }
+
+        .label-box {
+            background-color: var(--bts-red);
+            width: 100%;
+            text-align: center;
+            padding: 3px 0;
+            margin-bottom: 4px;
+        }
+
+        .label-box span {
+            color: white;
+            font-weight: 900;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .clock-time {
+            font-size: 1.4rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* --- ESTILOS DEL CALENDARIO --- */
+        .calendar-container {
+            width: 220px;
+            background: var(--bts-white);
+            border: 1px solid var(--bts-black);
+            padding: 10px;
+            font-size: 0.7rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--bts-gray-border);
+            padding-bottom: 5px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            text-align: center;
+        }
+
+        .calendar-day-head {
+            font-weight: 900;
+            color: var(--bts-text-muted);
+            margin-bottom: 5px;
+        }
+
+        .calendar-day {
+            padding: 4px 0;
+            font-weight: 600;
+        }
+
+        .has-event {
+            background-color: var(--bts-red);
+            color: white;
+            border-radius: 2px;
+            font-weight: 900;
+        }
+
+        /* --- TABLA Y EVENTOS --- */
+        .main-content {
+            padding: 0 var(--header-padding) 40px;
+            flex: 1;
+        }
+
+        .table-header, .event-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 160px 80px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .table-header {
+            padding: 15px 0;
+            border-bottom: 2px solid var(--bts-black);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        .event-row {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--bts-gray-border);
+        }
+
+        .event-row.past-event {
+            opacity: 0.5;
+            background: #fafafa;
+        }
+
+        .past-tag {
+            font-size: 0.55rem;
+            background: #999;
+            color: white;
+            padding: 2px 4px;
+            font-weight: 900;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .date-col { font-size: 1.2rem; font-weight: 900; text-align: center; }
+        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; }
+
+        .info-col .event-name { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
+        .info-col button.details-trigger {
+            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); 
+            border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
+        }
+
+        .sync-col { display: flex; flex-direction: column; gap: 6px; }
+        .time-pill {
+            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
+            font-weight: 700; font-size: 0.75rem; border-radius: 2px;
+        }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; }
+
+        .action-col { display: flex; gap: 10px; justify-content: flex-end; }
+        .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
+        .edit-btn:hover { color: var(--bts-black); }
+        .delete-btn:hover { color: var(--bts-red); }
+
+        /* MODALES */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
+        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
+        .modal-body h2 { font-size: 1.8rem; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; }
+        
+        .detail-item { margin-bottom: 15px; }
+        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); }
+        .detail-item p { font-size: 1rem; font-weight: 700; }
+
+        /* Contenedor de botones en el modal */
+        .modal-footer-actions {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 20px; 
+            align-items: stretch; /* Esto asegura que el botón de copiar tenga la misma altura que el link */
+        }
+
+        .modal-link-btn { 
+            flex: 1;
+            padding: 15px; 
+            background: black; 
+            color: white; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-copy-btn {
+            width: 50px;
+            background: black;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-copy-btn:hover {
+            background: var(--bts-red);
+        }
+
+        #event-form { display: none; background: var(--bts-gray-light); padding: 20px; border: 2px solid var(--bts-black); margin-top: 10px; }
+        .form-grid { display: flex; flex-direction: column; gap: 12px; }
+        .form-grid input { padding: 12px; border: 1px solid #ccc; width: 100%; }
+        .save-btn { background: var(--bts-black); color: white; padding: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
+        .footer-controls { padding: 20px 0; display: flex; justify-content: center; }
+        .add-btn { background: var(--bts-black); color: white; border: none; padding: 14px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 300px; }
+
+        @media (max-width: 500px) {
+            .table-header { display: none; }
+            .event-row { grid-template-columns: 60px 1fr 40px; grid-template-areas: "date info action" "date sync action"; }
+            .date-col { grid-area: date; }
+            .info-col { grid-area: info; }
+            .sync-col { grid-area: sync; flex-direction: row; gap: 10px; }
+            .action-col { grid-area: action; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="title-group">
+                <h1>Schedule</h1>
+                <p>BTS Official Event Tracker</p>
+            </div>
+            <div class="album-container">
+                <img src="arirang album.png" alt="Arirang Album">
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="clocks-wrapper">
+                <div class="clock-item">
+                    <div class="label-box"><span>Peru</span></div>
+                    <div id="pe-time" class="clock-time">--:--:--</div>
+                </div>
+                <div class="clock-item">
+                    <div class="label-box"><span>Korea</span></div>
+                    <div id="kr-time" class="clock-time">--:--:--</div>
+                </div>
+            </div>
+            
+            <div id="calendar-widget" class="calendar-container">
+                <div id="cal-month" class="calendar-header">Cargando...</div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-head">D</div>
+                    <div class="calendar-day-head">L</div>
+                    <div class="calendar-day-head">M</div>
+                    <div class="calendar-day-head">X</div>
+                    <div class="calendar-day-head">J</div>
+                    <div class="calendar-day-head">V</div>
+                    <div class="calendar-day-head">S</div>
+                </div>
+                <div id="cal-days" class="calendar-grid"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="table-header">
+            <div>Fecha</div>
+            <div>Evento</div>
+            <div>Horario</div>
+            <div style="text-align: right;">Acción</div>
+        </div>
+
+        <div id="events-list"></div>
+
+        <div class="footer-controls">
+            <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+        </div>
+
+        <div id="event-form">
+            <div class="form-grid">
+                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
+                <input type="hidden" id="edit-id">
+                <input type="text" id="in-title" placeholder="Nombre del Evento">
+                <input type="datetime-local" id="in-date">
+                <input type="url" id="in-link" placeholder="Link del Evento (opcional)">
+                <button id="btn-save" class="save-btn">Guardar Evento</button>
+                <button id="btn-cancel" class="cancel-btn">Cancelar</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">×</span>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log("App lista para instalar"))
+      .catch(err => console.log("Error", err));
+  }
+</script>
+
+</body>
+</html>
