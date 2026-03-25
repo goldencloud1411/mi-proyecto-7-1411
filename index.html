@@ -33,9 +33,16 @@
         header {
             padding: var(--header-padding);
             border-bottom: 2px solid var(--bts-black);
-            position: relative;
+            display: flex;
+            justify-content: space-between;
             background: white;
-            z-index: 10;
+            position: relative;
+        }
+
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            max-width: 60%;
         }
 
         .title-group h1 {
@@ -55,28 +62,35 @@
             margin-top: 6px;
         }
 
-        .album-container img {
+        .album-container {
             margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .album-container img {
             width: 170px;
             height: auto;
             border: 1px solid var(--bts-gray-border);
             display: block;
         }
 
+        .right-side {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
         .clocks {
             display: flex;
-            gap: 15px;
-            position: absolute;
-            top: var(--header-padding);
-            right: var(--header-padding);
-            align-items: center;
+            gap: 10px;
         }
 
         .clock-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 65px;
+            width: 60px;
         }
 
         .label-box {
@@ -90,25 +104,22 @@
         .label-box span {
             color: white;
             font-weight: 900;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
         }
 
         .clock-time {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 800;
             font-variant-numeric: tabular-nums;
         }
 
         .calendar {
-            width: 140px;
+            width: 130px;
             background: var(--bts-white);
             border: 1px solid var(--bts-black);
             padding: 5px;
-            font-size: 0.6rem;
-            position: absolute;
-            top: 65px; /* Just below clocks */
-            right: var(--header-padding);
+            font-size: 0.55rem;
         }
 
         .calendar-header {
@@ -145,33 +156,15 @@
             font-weight: 900;
         }
 
-        /* Cuerpo principal */
         main {
             padding: 0 var(--header-padding) 40px;
             flex: 1;
         }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            color: var(--bts-text-muted);
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .controls span { display: flex; align-items: center; gap: 4px; cursor: pointer; }
-        .controls a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 4px; }
-
-        .spotify-iframe-container iframe {
-            margin-top: 10px;
-        }
-
         /* Tabla de eventos */
         .table-header, .event-row {
             display: grid;
-            grid-template-columns: 35px 1fr 65px 40px; /* adapted columns for sidepanel */
+            grid-template-columns: 35px 1fr 65px 40px;
             gap: 8px;
             align-items: center;
         }
@@ -182,6 +175,7 @@
             font-weight: 900;
             text-transform: uppercase;
             font-size: 0.65rem;
+            margin-top: 20px;
         }
 
         .event-row {
@@ -206,19 +200,18 @@
             padding: 0;
         }
 
-        .sync-col { display: flex; flex-direction: column; gap: 2px; }
-        
         .time-pill {
             background: var(--bts-gray-light);
             padding: 2px 4px;
             display: flex;
             justify-content: space-between;
             font-weight: 700;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             border-radius: 2px;
+            margin-bottom: 2px;
         }
 
-        .time-pill .tag { color: var(--bts-red); font-size: 0.55rem; font-weight: 900; margin-right: 4px; }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.5rem; font-weight: 900; margin-right: 4px; }
 
         .action-col { text-align: right; }
 
@@ -232,13 +225,13 @@
         }
 
         .form-grid { display: flex; flex-direction: column; gap: 8px; }
-        .form-grid input { padding: 8px; border: 1px solid #ccc; }
+        .form-grid input { padding: 8px; border: 1px solid #ccc; font-family: inherit; }
         
         .save-btn { background: var(--bts-black); color: white; padding: 10px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .cancel-btn { background: #eee; color: #666; padding: 8px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; }
 
         .footer-controls {
-            padding: 10px 0;
+            padding: 20px 0;
             display: flex;
             justify-content: center;
         }
@@ -254,79 +247,55 @@
             font-size: 0.7rem;
         }
 
-        /* -------------------------------------------------------------------------- */
-        /* --- MOBILE FIX (Solo para celulares) --- */
-        /* -------------------------------------------------------------------------- */
-        @media (max-width: 480px) {
-            header {
-                /* Cambiamos el diseño de la cabecera para apilar verticalmente */
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-                padding-bottom: 15px; /* Más espacio abajo */
-            }
+        /* MODAL */
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: white; width: 100%; max-width: 400px; padding: 20px; position: relative; }
+        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
+        .modal-body h2 { text-transform: uppercase; font-size: 1.2rem; margin-bottom: 10px; border-bottom: 2px solid black; padding-bottom: 5px; }
 
-            .title-group h1 { font-size: 1.8rem; } /* Achicamos un poco el título */
-            
-            .album-container img { margin-top: 5px; } /* Menos margen arriba de la foto */
-
-            /* Quitamos el posicionamiento absoluto de los relojes y el calendario */
-            .clocks, .calendar {
-                position: static;
-                width: auto;
-                right: auto;
-                top: auto;
-                margin-top: 5px; /* Margen para separarlos */
-            }
-
-            /* Los relojes uno al lado del otro, alineados a la izquierda */
-            .clocks { margin-left: 0; }
-            
-            /* El calendario un poco más angosto para que no empuje todo */
-            .calendar {
-                width: 130px; 
-                margin-left: 0;
-            }
+        /* AJUSTES MÓVILES EXTREMOS */
+        @media (max-width: 400px) {
+            .title-group h1 { font-size: 1.6rem; }
+            .album-container img { width: 120px; }
+            .calendar { width: 110px; }
+            .clock-item { width: 50px; }
+            .clock-time { font-size: 0.65rem; }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="title-group">
-            <h1>Schedule</h1>
-            <p>BTS Official Event Tracker</p>
-        </div>
-        <div class="album-container">
-            <img src="arirang album.png" alt="Arirang Album">
-        </div>
-        <div class="clocks">
-            <div class="clock-item">
-                <div class="label-box"><span>Peru</span></div>
-                <div id="pe-time" class="clock-time">--:--:--</div>
+        <div class="left-side">
+            <div class="title-group">
+                <h1>Schedule</h1>
+                <p>BTS Official Event Tracker</p>
             </div>
-            <div class="clock-item">
-                <div class="label-box"><span>Korea</span></div>
-                <div id="kr-time" class="clock-time">--:--:--</div>
+            <div class="album-container" id="album-container">
+                <img src="arirang album.png" alt="Arirang Album" id="album-img">
             </div>
         </div>
-        <div class="calendar">
-            <div id="cal-month" class="calendar-header">Cargando...</div>
-            <div class="calendar-grid">
-                <div class="calendar-day-head">D</div><div class="calendar-day-head">L</div><div class="calendar-day-head">M</div><div class="calendar-day-head">X</div><div class="calendar-day-head">J</div><div class="calendar-day-head">V</div><div class="calendar-day-head">S</div>
+        <div class="right-side">
+            <div class="clocks">
+                <div class="clock-item">
+                    <div class="label-box"><span>Peru</span></div>
+                    <div id="pe-time" class="clock-time">--:--</div>
+                </div>
+                <div class="clock-item">
+                    <div class="label-box"><span>Korea</span></div>
+                    <div id="kr-time" class="clock-time">--:--</div>
+                </div>
             </div>
-            <div id="cal-days" class="calendar-grid"></div>
+            <div class="calendar">
+                <div id="cal-month" class="calendar-header">Marzo</div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-head">D</div><div class="calendar-day-head">L</div><div class="calendar-day-head">M</div><div class="calendar-day-head">M</div><div class="calendar-day-head">J</div><div class="calendar-day-head">V</div><div class="calendar-day-head">S</div>
+                </div>
+                <div id="cal-days" class="calendar-grid"></div>
+            </div>
         </div>
     </header>
 
     <main>
-        <div class="controls">
-            <span id="change-playlist">⚙️ Cambiar Playlist</span>
-            <a href="#" target="_blank">🔗 Abrir App</a>
-        </div>
-        
-        <div class="spotify-iframe-container"></div>
-
         <div class="table-header">
             <div>Fecha</div><div>Evento</div><div>Horas</div><div>Acción</div>
         </div>
@@ -339,7 +308,7 @@
 
         <div id="event-form">
             <div class="form-grid">
-                <input type="text" id="in-title" placeholder="Evento">
+                <input type="text" id="in-title" placeholder="Nombre del Evento">
                 <input type="datetime-local" id="in-date">
                 <button id="btn-save" class="save-btn">Guardar</button>
                 <button id="btn-cancel" class="cancel-btn">Cancelar</button>
@@ -347,14 +316,13 @@
         </div>
     </main>
 
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">×</span>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <script>
-        // Registrar Service Worker para PWA (actualizado a v3 para forzar cambio)
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js?v=3')
-                .then(() => console.log("App lista para instalar"))
-                .catch(err => console.log("Error SW", err));
-        }
-    </script>
 </body>
 </html>
