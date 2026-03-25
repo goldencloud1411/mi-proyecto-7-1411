@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/png" href="icon.png">
     <title>ARMY Schedule Pro</title>
-    <link rel="manifest" href="manifest.json">
     <style>
-        /* COLORES Y ESTILOS ORIGINALES DE ARMY_SCHEDULE */
+        /* ESTILOS ORIGINALES DE ARMY_SCHEDULE (FOTO 2) */
         :root {
             --bts-black: #000000;
             --bts-white: #ffffff;
@@ -34,30 +33,51 @@
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
             gap: 15px;
             border-bottom: 1px solid var(--bts-gray-border);
-            background-color: var(--bts-white);
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .header-right {
+            flex: 1;
+            min-width: 250px;
         }
 
         .header-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
 
         .header-top img {
             height: 40px;
-            object-fit: contain;
         }
 
         .album-container {
-            display: flex;
-            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
+        .album-container:hover {
+            transform: scale(1.05);
+        }
+
+        .album-container img {
+            height: 50px;
+            border-radius: 4px;
+        }
+
+        /* Relojes */
         .clocks-container {
             display: flex;
             justify-content: space-between;
@@ -83,9 +103,9 @@
             text-transform: uppercase;
         }
 
-        /* Calendario original */
+        /* Calendario */
         .calendar-wrapper {
-            margin-top: 10px;
+            background: var(--bts-white);
         }
 
         .calendar-grid {
@@ -128,17 +148,13 @@
             transform: translateX(-50%);
         }
 
-        .cal-day.today .dot {
-            background-color: var(--bts-red);
-        }
-
+        /* Main Content */
         main.main-content {
-            flex-grow: 1;
             padding: 20px;
-            padding-bottom: 80px; /* Espacio para el botón inferior */
+            flex-grow: 1;
+            padding-bottom: 100px;
         }
 
-        /* Tabla original para escritorio */
         .table-header {
             display: grid;
             grid-template-columns: 90px 1fr 80px 100px;
@@ -176,26 +192,17 @@
             transition: background 0.2s;
             display: flex;
             align-items: center;
-            justify-content: center;
         }
 
         .action-btn:hover { background: var(--bts-gray-light); }
 
-        /* Botones y controles originales */
+        /* Controles Inferiores */
         .footer-controls {
-            position: fixed;
+            padding: 20px;
+            position: sticky;
             bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px 20px;
             background: var(--bts-white);
             border-top: 1px solid var(--bts-gray-border);
-            z-index: 10;
-        }
-
-        button {
-            cursor: pointer;
-            font-family: inherit;
         }
 
         .add-btn {
@@ -207,37 +214,17 @@
             border-radius: 4px;
             font-weight: bold;
             font-size: 1rem;
+            cursor: pointer;
             text-transform: uppercase;
         }
 
-        .save-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--bts-black);
-            color: var(--bts-white);
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .cancel-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--bts-white);
-            color: var(--bts-black);
-            border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
-            font-weight: bold;
-            margin-top: 8px;
-        }
-
+        /* Formulario */
         #event-form {
             display: none;
             background: var(--bts-gray-light);
             padding: 20px;
             border-radius: 6px;
-            margin-bottom: 20px;
+            margin-top: 20px;
             border: 1px solid var(--bts-gray-border);
         }
 
@@ -252,15 +239,29 @@
             border: 1px solid var(--bts-gray-border);
             border-radius: 4px;
             font-size: 0.95rem;
-            width: 100%;
-            outline: none;
-        }
-        
-        input:focus {
-            border-color: var(--bts-black);
         }
 
-        /* Modal Original */
+        .save-btn {
+            background: var(--bts-black);
+            color: var(--bts-white);
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: var(--bts-white);
+            color: var(--bts-black);
+            padding: 10px;
+            border: 1px solid var(--bts-gray-border);
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -272,14 +273,13 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            padding: 20px;
         }
 
         .modal-content {
             background: var(--bts-white);
-            padding: 30px 25px;
+            padding: 30px;
             border-radius: 6px;
-            width: 100%;
+            width: 90%;
             max-width: 400px;
             position: relative;
         }
@@ -290,83 +290,63 @@
             right: 15px;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--bts-black);
-            background: none;
             border: none;
+            background: none;
         }
 
-        /* =========================================================
-           ADAPTACIONES MÓVILES (Basadas en "ARMY_Schedule - App")
-           ========================================================= */
+        /* RESPONSIVIDAD MÓVIL (Foto 1 Adaptada) */
         @media (max-width: 600px) {
-            .table-header { display: none; } /* Ocultar cabecera en móviles */
-            
+            header { flex-direction: column; }
+            .header-right, .header-left { width: 100%; }
+            .table-header { display: none; }
             .event-row {
                 grid-template-columns: 1fr;
                 gap: 5px;
-                padding: 15px;
                 border: 1px solid var(--bts-gray-border);
-                border-radius: 6px;
                 margin-bottom: 10px;
-                background: var(--bts-white);
-                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+                padding: 15px;
+                border-radius: 6px;
             }
-
-            .event-row > div:nth-child(1) { font-size: 0.85rem; color: var(--bts-text-muted); }
-            .event-row > div:nth-child(2) { font-weight: bold; font-size: 1.1rem; color: var(--bts-black); }
-            .event-row > div:nth-child(3) { font-size: 0.9rem; color: var(--bts-text-muted); }
-            
-            .event-actions {
-                justify-content: flex-start;
-                margin-top: 10px;
-                border-top: 1px solid var(--bts-gray-light);
-                padding-top: 10px;
-            }
-
-            .clocks-container {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-
-            .header-top {
-                justify-content: center;
-            }
+            .event-actions { justify-content: flex-start; margin-top: 10px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-top">
-            <img src="arirang logo.png" alt="Arirang Logo" onerror="this.style.display='none'">
-            <div class="album-container">
-                <img src="arirang album.png" alt="Arirang Album" onerror="this.style.display='none'">
+        <div class="header-left">
+            <div class="header-top">
+                <img src="arirang logo.png" alt="Arirang Logo" onerror="this.style.display='none'">
+                <div class="album-container" id="album-btn">
+                    <img src="arirang album.png" alt="Arirang Album" onerror="this.style.display='none'">
+                </div>
+            </div>
+
+            <div class="clocks-container">
+                <div class="clock-item">
+                    <span class="clock-label">Perú 🇵🇪</span>
+                    <span id="pe-time">--:--:--</span>
+                </div>
+                <div class="clock-item">
+                    <span class="clock-label">Corea 🇰🇷</span>
+                    <span id="kr-time">--:--:--</span>
+                </div>
             </div>
         </div>
 
-        <div class="clocks-container">
-            <div class="clock-item">
-                <span class="clock-label">Perú 🇵🇪</span>
-                <span id="pe-time">--:--:--</span>
+        <div class="header-right">
+            <div class="calendar-wrapper">
+                <div class="calendar-grid">
+                    <div class="calendar-day-head">D</div>
+                    <div class="calendar-day-head">L</div>
+                    <div class="calendar-day-head">M</div>
+                    <div class="calendar-day-head">M</div>
+                    <div class="calendar-day-head">J</div>
+                    <div class="calendar-day-head">V</div>
+                    <div class="calendar-day-head">S</div>
+                </div>
+                <div id="cal-days" class="calendar-grid"></div>
             </div>
-            <div class="clock-item">
-                <span class="clock-label">Corea 🇰🇷</span>
-                <span id="kr-time">--:--:--</span>
-            </div>
-        </div>
-
-        <div class="calendar-wrapper">
-            <div class="calendar-grid">
-                <div class="calendar-day-head">D</div>
-                <div class="calendar-day-head">L</div>
-                <div class="calendar-day-head">M</div>
-                <div class="calendar-day-head">M</div>
-                <div class="calendar-day-head">J</div>
-                <div class="calendar-day-head">V</div>
-                <div class="calendar-day-head">S</div>
-            </div>
-            <div id="cal-days" class="calendar-grid"></div>
         </div>
     </header>
 
@@ -382,7 +362,7 @@
 
         <div id="event-form">
             <div class="form-grid">
-                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
+                <h3 id="form-title">NUEVO EVENTO</h3>
                 <input type="hidden" id="edit-id">
                 <input type="text" id="in-title" placeholder="Nombre del Evento">
                 <input type="datetime-local" id="in-date">
@@ -397,7 +377,6 @@
         <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
     </div>
 
-    <!-- Modal de Detalles / Confirmación -->
     <div id="details-modal" class="modal">
         <div class="modal-content">
             <button class="close-modal" id="modal-close">&times;</button>
@@ -405,10 +384,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT ORIGINAL RESTAURADO Y CONSOLIDADO -->
     <script>
         (function() {
             const STORAGE_KEY = 'bts_pro_events';
+            const SPOTIFY_URL_KEY = 'bts_pro_spotify';
             let events = [];
 
             const loadData = () => {
@@ -428,19 +407,8 @@
                 const now = new Date();
                 const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Lima' });
                 const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
-                
-                const peEl = document.getElementById('pe-time');
-                const krEl = document.getElementById('kr-time');
-                if (peEl) peEl.textContent = pe;
-                if (krEl) krEl.textContent = kr;
-            };
-
-            // Función para manejar el reproductor de Spotify (Original)
-            const setupSpotifyPlayer = () => {
-                const container = document.querySelector('.album-container');
-                if (!container) return;
-                const SPOTIFY_URL_KEY = 'bts_pro_spotify';
-                // La lógica original del reproductor se mantiene aquí si es que el contenedor existe
+                document.getElementById('pe-time').textContent = pe;
+                document.getElementById('kr-time').textContent = kr;
             };
 
             const renderCalendar = () => {
@@ -449,200 +417,137 @@
                 const now = new Date();
                 const year = now.getFullYear();
                 const month = now.getMonth();
-                
                 const firstDay = new Date(year, month, 1).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-                for (let i = 0; i < firstDay; i++) {
-                    calDays.innerHTML += `<div></div>`;
-                }
+                for (let i = 0; i < firstDay; i++) calDays.innerHTML += '<div></div>';
 
                 for (let i = 1; i <= daysInMonth; i++) {
                     const hasEvent = events.some(ev => {
-                        if (!ev.date) return false;
-                        const evDate = new Date(ev.date);
-                        return evDate.getDate() === i && evDate.getMonth() === month && evDate.getFullYear() === year;
+                        const d = new Date(ev.date);
+                        return d.getDate() === i && d.getMonth() === month && d.getFullYear() === year;
                     });
-                    
-                    const eventDot = hasEvent ? '<span class="dot"></span>' : '';
                     const isToday = (i === now.getDate() && month === now.getMonth() && year === now.getFullYear()) ? 'today' : '';
-                    
-                    calDays.innerHTML += `<div class="cal-day ${isToday}">${i}${eventDot}</div>`;
+                    calDays.innerHTML += `<div class="cal-day ${isToday}">${i}${hasEvent ? '<span class="dot"></span>' : ''}</div>`;
                 }
             };
 
             const renderEvents = () => {
                 const list = document.getElementById('events-list');
                 list.innerHTML = '';
-
                 events.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                if (events.length === 0) {
-                    list.innerHTML = '<p style="text-align:center; color: var(--bts-text-muted); padding: 20px;">No hay eventos. ¡Agrega uno nuevo!</p>';
-                    return;
-                }
-
-                events.forEach((ev, index) => {
-                    const dateObj = new Date(ev.date);
-                    const day = dateObj.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                    const time = dateObj.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
+                events.forEach((ev, idx) => {
+                    const d = new Date(ev.date);
+                    const dayStr = d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
+                    const timeStr = d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
                     
                     const row = document.createElement('div');
                     row.className = 'event-row';
                     row.innerHTML = `
-                        <div>${day}</div>
-                        <div>${ev.title}</div>
-                        <div>${time} Hrs</div>
+                        <div>${dayStr}</div>
+                        <div style="font-weight:500">${ev.title}</div>
+                        <div>${timeStr} Hrs</div>
                         <div class="event-actions">
-                            <button class="action-btn" onclick="viewEvent(${index})" title="Ver Detalles">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                            </button>
-                            <button class="action-btn" onclick="editEvent(${index})" title="Editar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                            </button>
-                            <button class="action-btn" onclick="confirmDelete(${index})" title="Eliminar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
+                            <button class="action-btn" onclick="window.viewEvent(${idx})">👁️</button>
+                            <button class="action-btn" onclick="window.editEvent(${idx})">✏️</button>
+                            <button class="action-btn" onclick="window.deleteEvent(${idx})">🗑️</button>
                         </div>
                     `;
                     list.appendChild(row);
                 });
             };
 
-            const initForm = () => {
-                const btnToggle = document.getElementById('btn-toggle-form');
-                const form = document.getElementById('event-form');
-                const btnSave = document.getElementById('btn-save');
-                const btnCancel = document.getElementById('btn-cancel');
-
-                btnToggle.onclick = () => {
-                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
-                    if (form.style.display === 'block') {
-                        document.getElementById('edit-id').value = '';
-                        document.getElementById('in-title').value = '';
-                        document.getElementById('in-date').value = '';
-                        document.getElementById('in-link').value = '';
-                        document.getElementById('form-title').textContent = 'NUEVO EVENTO';
-                        window.scrollTo(0, document.body.scrollHeight);
+            // Función Spotify (Faltaba restaurar la lógica de configuración)
+            const setupSpotify = () => {
+                const btn = document.getElementById('album-btn');
+                btn.onclick = () => {
+                    const current = localStorage.getItem(SPOTIFY_URL_KEY) || "";
+                    const newUrl = prompt("Configura tu link de Spotify (Embed URL):", current);
+                    if (newUrl !== null) {
+                        localStorage.setItem(SPOTIFY_URL_KEY, newUrl);
+                        location.reload();
                     }
                 };
-
-                btnCancel.onclick = () => {
-                    form.style.display = 'none';
-                };
-
-                btnSave.onclick = () => {
-                    const id = document.getElementById('edit-id').value;
-                    const title = document.getElementById('in-title').value.trim();
-                    const date = document.getElementById('in-date').value;
-                    const link = document.getElementById('in-link').value.trim();
-
-                    if (title && date) {
-                        if (id !== '') {
-                            events[parseInt(id)] = { title, date, link };
-                        } else {
-                            events.push({ title, date, link });
-                        }
-                        saveData();
-                        form.style.display = 'none';
-                    } else {
-                        alert("Por favor completa el título y la fecha.");
-                    }
-                };
-            };
-
-            window.viewEvent = (index) => {
-                const ev = events[index];
-                const modal = document.getElementById('details-modal');
-                const modalBody = document.getElementById('modal-body');
                 
-                const dateObj = new Date(ev.date);
-                const formattedDate = dateObj.toLocaleString('es-PE', { dateStyle: 'full', timeStyle: 'short' });
-
-                modalBody.innerHTML = `
-                    <h2 style="margin-bottom: 10px; font-size: 1.4rem;">${ev.title}</h2>
-                    <p style="color: var(--bts-text-muted); margin-bottom: 5px;"><strong>Fecha y Hora:</strong></p>
-                    <p style="font-size: 1.1rem; margin-bottom: 15px;">${formattedDate} Hrs</p>
-                    ${ev.link ? `
-                    <div style="background: var(--bts-gray-light); padding: 15px; border-radius: 4px; border: 1px solid var(--bts-gray-border);">
-                        <p style="font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; text-transform: uppercase;">Enlace:</p>
-                        <a href="${ev.link}" target="_blank" style="color: #000; word-break: break-all; text-decoration: underline; display:block; margin-bottom: 10px;">${ev.link}</a>
-                        <button id="btn-copy-modal" data-link="${ev.link}" class="cancel-btn" style="display:flex; justify-content:center; align-items:center; gap:8px;">
-                            Copiar Enlace
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                    </div>` : ''}
-                `;
-                modal.style.display = 'flex';
-
-                // Lógica original de copiado de link con cambio de SVG temporal
-                const copyBtn = document.getElementById('btn-copy-modal');
-                if (copyBtn) {
-                    copyBtn.onclick = () => {
-                        const url = copyBtn.getAttribute('data-link');
-                        const temp = document.createElement('input');
-                        temp.value = url;
-                        document.body.appendChild(temp);
-                        temp.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(temp);
-                        
-                        const originalSVG = copyBtn.innerHTML;
-                        copyBtn.innerHTML = `Copiado! <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                        setTimeout(() => copyBtn.innerHTML = originalSVG, 2000);
-                    };
+                const spotifyUrl = localStorage.getItem(SPOTIFY_URL_KEY);
+                if (spotifyUrl) {
+                    const player = document.createElement('div');
+                    player.style.marginTop = "15px";
+                    player.innerHTML = `<iframe style="border-radius:12px" src="${spotifyUrl}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                    document.querySelector('.header-left').appendChild(player);
                 }
             };
 
-            window.editEvent = (index) => {
-                const ev = events[index];
-                document.getElementById('edit-id').value = index;
+            // Global functions for actions
+            window.viewEvent = (idx) => {
+                const ev = events[idx];
+                const d = new Date(ev.date).toLocaleString('es-PE', { dateStyle: 'full', timeStyle: 'short' });
+                const modal = document.getElementById('details-modal');
+                document.getElementById('modal-body').innerHTML = `
+                    <h2>${ev.title}</h2>
+                    <p style="margin: 15px 0;"><strong>Fecha:</strong> ${d}</p>
+                    ${ev.link ? `<a href="${ev.link}" target="_blank" class="save-btn" style="display:block; text-align:center; text-decoration:none;">Ir al Link</a>` : ''}
+                `;
+                modal.style.display = 'flex';
+            };
+
+            window.editEvent = (idx) => {
+                const ev = events[idx];
+                document.getElementById('edit-id').value = idx;
                 document.getElementById('in-title').value = ev.title;
                 document.getElementById('in-date').value = ev.date;
                 document.getElementById('in-link').value = ev.link || '';
-                
-                document.getElementById('form-title').textContent = 'EDITAR EVENTO';
+                document.getElementById('form-title').textContent = "EDITAR EVENTO";
                 document.getElementById('event-form').style.display = 'block';
                 window.scrollTo(0, document.body.scrollHeight);
             };
 
-            window.confirmDelete = (index) => {
-                const modal = document.getElementById('details-modal');
-                const modalBody = document.getElementById('modal-body');
-                
-                modalBody.innerHTML = `
-                    <h3 style="margin-bottom: 15px; text-align: center;">¿Seguro que deseas eliminar?</h3>
-                    <p style="text-align: center; color: var(--bts-text-muted); margin-bottom: 20px;">"${events[index].title}"</p>
-                    <div style="display:flex; gap:10px;">
-                        <button id="btn-confirm-del" class="save-btn" style="margin-top:0; background:var(--bts-red);">Eliminar</button>
-                        <button id="btn-cancel-del" class="cancel-btn" style="margin-top:0;">Cancelar</button>
-                    </div>
-                `;
-                modal.style.display = 'flex';
-
-                document.getElementById('btn-confirm-del').onclick = () => {
-                    events.splice(index, 1);
+            window.deleteEvent = (idx) => {
+                if(confirm("¿Eliminar este evento?")) {
+                    events.splice(idx, 1);
                     saveData();
-                    modal.style.display = 'none';
-                };
-                
-                document.getElementById('btn-cancel-del').onclick = () => {
-                    modal.style.display = 'none';
-                };
+                }
             };
 
-            document.getElementById('modal-close').onclick = () => {
-                document.getElementById('details-modal').style.display = 'none';
+            // Form Logic
+            document.getElementById('btn-toggle-form').onclick = () => {
+                const f = document.getElementById('event-form');
+                f.style.display = f.style.display === 'block' ? 'none' : 'block';
+                if (f.style.display === 'block') {
+                    document.getElementById('edit-id').value = '';
+                    document.getElementById('in-title').value = '';
+                    document.getElementById('in-date').value = '';
+                    document.getElementById('in-link').value = '';
+                    document.getElementById('form-title').textContent = "NUEVO EVENTO";
+                }
             };
+
+            document.getElementById('btn-cancel').onclick = () => document.getElementById('event-form').style.display = 'none';
+
+            document.getElementById('btn-save').onclick = () => {
+                const id = document.getElementById('edit-id').value;
+                const title = document.getElementById('in-title').value;
+                const date = document.getElementById('in-date').value;
+                const link = document.getElementById('in-link').value;
+                if (!title || !date) return alert("Completa los campos");
+                
+                if (id !== "") events[id] = { title, date, link };
+                else events.push({ title, date, link });
+                
+                saveData();
+                document.getElementById('event-form').style.display = 'none';
+            };
+
+            document.getElementById('modal-close').onclick = () => document.getElementById('details-modal').style.display = 'none';
 
             window.onload = () => {
                 loadData();
-                renderEvents();
-                renderCalendar();
                 updateClocks();
-                setupSpotifyPlayer();
+                renderCalendar();
+                renderEvents();
+                setupSpotify();
                 setInterval(updateClocks, 1000);
-                initForm();
             };
         })();
     </script>
