@@ -26,6 +26,7 @@
 
         body {
             font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+            font-weight: 500;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased;
             background-color: var(--bts-white);
@@ -58,12 +59,12 @@
         .header-right { align-items: flex-end; }
 
         .title-group h1 {
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-size: clamp(2rem, 8vw, 3.5rem);
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -1px;
-            line-height: 0.9;
+            letter-spacing: -1.4px;
+            line-height: 0.88;
         }
 
         .title-group p {
@@ -186,7 +187,7 @@
 
         .calendar-header {
             text-align: center;
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 8px;
@@ -202,7 +203,7 @@
         }
 
         .calendar-day-head {
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             color: var(--bts-text-muted);
             margin-bottom: 5px;
@@ -236,7 +237,7 @@
         .table-header {
             padding: 15px 0;
             border-bottom: 2px solid var(--bts-black);
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             font-size: 0.7rem;
@@ -263,21 +264,22 @@
             vertical-align: middle;
         }
 
-        .date-col { font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; }
-        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; font-weight: 700; }
+        .date-col { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; letter-spacing: 0.2px; }
+        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; font-weight: 900; letter-spacing: 0.6px; }
 
-        .info-col .event-name { font-family: 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
+        .info-col .event-name { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; line-height: 1.05; letter-spacing: 0.1px; }
         .info-col button.details-trigger {
-            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); font-family: 'Arial Black', Arial, Helvetica, sans-serif; 
+            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; 
             border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
         }
 
         .sync-col { display: flex; flex-direction: column; gap: 6px; }
         .time-pill {
             background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
-            font-weight: 800; font-size: 0.75rem; border-radius: 2px;
+            font-weight: 900; font-size: 0.75rem; border-radius: 2px;
         }
-        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.4px; }
+        .time-pill span:last-child { font-weight: 900; }
 
         .action-col { display: flex; gap: 10px; justify-content: flex-end; }
         .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
@@ -291,11 +293,11 @@
         }
         .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
         .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
-        .modal-body h2 { font-size: 1.8rem; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; }
+        .modal-body h2 { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; line-height: 1; }
         
         .detail-item { margin-bottom: 15px; }
-        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); }
-        .detail-item p { font-size: 1rem; font-weight: 700; }
+        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.5px; }
+        .detail-item p { font-size: 1rem; font-weight: 900; font-family: 'Arial Black', Arial, Helvetica, sans-serif; }
 
         /* Contenedor de botones en el modal */
         .modal-footer-actions {
@@ -340,6 +342,25 @@
         .form-grid input { padding: 12px; border: 1px solid #ccc; width: 100%; }
         .save-btn { background: var(--bts-black); color: white; padding: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
+
+        .table-header > div {
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-weight: 900;
+        }
+
+        .label-box span,
+        .clock-time,
+        .calendar-header,
+        .calendar-day-head,
+        .has-event,
+        .past-tag,
+        .modal-link-btn,
+        .save-btn,
+        .add-btn {
+            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-weight: 900;
+        }
+
         .footer-controls { padding: 20px 0; display: flex; justify-content: center; }
         .add-btn { background: var(--bts-black); color: white; border: none; padding: 14px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 300px; }
 
