@@ -81,6 +81,20 @@
             cursor: pointer;
         }
 
+        .media-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .album-container {
+            width: 100%;
+            max-width: 380px;
+        }
+
         .spotify-controls {
             display: flex;
             justify-content: space-between;
@@ -88,7 +102,8 @@
             gap: 14px;
             margin-top: 8px;
             padding: 0 4px;
-            width: min(100%, 380px);
+            width: 100%;
+            max-width: 380px;
         }
 
         .spotify-control-btn,
@@ -345,6 +360,16 @@
                 margin-top: 6px;
             }
 
+            .media-block {
+                width: 100%;
+                max-width: 260px;
+                gap: 6px;
+            }
+
+            .album-container {
+                max-width: 260px;
+            }
+
             .album-container img {
                 width: 100%;
                 max-width: 260px;
@@ -355,6 +380,7 @@
                 max-width: 260px;
                 padding: 0;
                 gap: 8px;
+                margin-top: 0;
             }
 
             .spotify-control-btn,
@@ -471,52 +497,72 @@
             }
 
             .table-header {
-                display: none;
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr) 112px 30px;
+                gap: 8px;
+                font-size: 0.56rem;
+                letter-spacing: 0.7px;
+                padding: 12px 0;
             }
 
             .event-row {
-                grid-template-columns: 54px minmax(0, 1fr) 34px;
-                grid-template-areas:
-                    "date info action"
-                    "date sync action";
+                grid-template-columns: 52px minmax(0, 1fr) 112px 30px;
                 gap: 8px;
                 align-items: start;
+                padding: 14px 0;
             }
 
             .date-col {
-                grid-area: date;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
+                line-height: 1;
             }
 
-            .info-col {
-                grid-area: info;
+            .date-col span {
+                font-size: 0.58rem;
+                margin-bottom: 4px;
             }
 
             .info-col .event-name {
-                font-size: 0.9rem;
+                font-size: 0.82rem;
+                line-height: 1.1;
+                margin-bottom: 6px;
+            }
+
+            .info-col button.details-trigger {
+                font-size: 0.58rem;
+            }
+
+            .past-tag {
+                font-size: 0.48rem;
+                padding: 2px 3px;
+                margin-left: 4px;
             }
 
             .sync-col {
-                grid-area: sync;
-                flex-direction: row;
-                flex-wrap: wrap;
                 gap: 6px;
             }
 
             .time-pill {
-                flex: 1 1 110px;
-                min-width: 0;
+                padding: 2px 0;
+                font-size: 0.58rem;
+                background: transparent;
+                justify-content: space-between;
+            }
+
+            .time-pill .tag {
+                font-size: 0.58rem;
             }
 
             .action-col {
-                grid-area: action;
                 flex-direction: column;
                 align-items: flex-end;
+                gap: 2px;
+                padding-top: 2px;
             }
 
             .action-btn {
-                font-size: 0.9rem;
-                padding: 2px;
+                font-size: 0.82rem;
+                padding: 1px;
             }
         }
 
@@ -534,7 +580,9 @@
                 margin-left: 0;
             }
 
-            .spotify-controls {
+            .media-block,
+            .spotify-controls,
+            .album-container {
                 max-width: none;
             }
         }
@@ -548,10 +596,12 @@
                 <h1>Schedule</h1>
                 <p>BTS Official Event Tracker</p>
             </div>
-            <div class="album-container">
-                <img src="arirang album.png" alt="Arirang Album">
+            <div class="media-block">
+                <div class="album-container">
+                    <img src="arirang album.png" alt="Arirang Album">
+                </div>
+                <div id="spotify-controls" class="spotify-controls"></div>
             </div>
-            <div id="spotify-controls" class="spotify-controls"></div>
         </div>
 
         <div class="header-right">
