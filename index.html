@@ -29,258 +29,275 @@
             overflow-x: hidden;
         }
 
+        /* AJUSTE DE CABECERA PARA MÓVIL */
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Permite que los elementos bajen si no caben */
             justify-content: space-between;
             align-items: flex-start;
-            gap: 20px;
-            border-bottom: 2px solid var(--bts-black);
+            gap: 15px;
+            border-bottom: 1px solid var(--bts-gray-border);
         }
 
-        .header-left, .header-right {
-            flex: 1;
-            min-width: 250px;
+        .header-left {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            flex: 1 1 200px; /* Base de 200px, puede crecer */
         }
 
-        .header-right { align-items: flex-end; }
-
-        .title-group h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            line-height: 0.9;
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .title-group p {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--bts-text-muted);
-            font-weight: 600;
-            margin-top: 10px;
+        .header-top img {
+            height: 30px;
+            width: auto;
+        }
+
+        .album-container {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .album-container:hover {
+            transform: scale(1.05);
         }
 
         .album-container img {
-            max-width: 100%;
-            width: 240px;
-            height: auto;
-            border: 1px solid var(--bts-gray-border);
-            display: block;
-            cursor: pointer;
+            height: 40px;
+            width: 40px;
+            border-radius: 4px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .clocks-wrapper {
+        .clocks-container {
             display: flex;
-            gap: 25px;
-            margin-bottom: 10px;
+            justify-content: space-around;
+            background: var(--bts-gray-light);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--bts-black);
+            border: 1px solid var(--bts-gray-border);
         }
 
         .clock-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100px;
+            gap: 2px;
         }
 
-        .label-box {
-            background-color: var(--bts-red);
-            width: 100%;
-            text-align: center;
-            padding: 3px 0;
-            margin-bottom: 4px;
-        }
-
-        .label-box span {
-            color: white;
-            font-weight: 900;
-            font-size: 0.7rem;
+        .clock-label {
+            font-size: 0.65rem;
+            color: var(--bts-text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .clock-time {
-            font-size: 1.4rem;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
+        .header-right {
+            flex: 1 1 180px; /* Base de 180px para el calendario */
+            max-width: 250px;
         }
 
-        /* --- ESTILOS DEL CALENDARIO --- */
-        .calendar-container {
-            width: 220px;
+        /* CALENDARIO */
+        .calendar-wrapper {
             background: var(--bts-white);
-            border: 1px solid var(--bts-black);
-            padding: 10px;
-            font-size: 0.7rem;
-        }
-
-        .calendar-header {
-            text-align: center;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--bts-gray-border);
-            padding-bottom: 5px;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
+            gap: 1px;
             text-align: center;
         }
 
         .calendar-day-head {
-            font-weight: 900;
+            font-weight: bold;
+            font-size: 0.65rem;
             color: var(--bts-text-muted);
-            margin-bottom: 5px;
+            padding-bottom: 4px;
         }
 
-        .calendar-day {
-            padding: 4px 0;
-            font-weight: 600;
-        }
-
-        .has-event {
-            background-color: var(--bts-red);
-            color: white;
+        .cal-day {
+            padding: 5px 0;
+            font-size: 0.75rem;
+            position: relative;
+            background: var(--bts-gray-light);
             border-radius: 2px;
-            font-weight: 900;
         }
 
-        /* --- TABLA Y EVENTOS --- */
+        .cal-day.today {
+            background: var(--bts-black);
+            color: var(--bts-white);
+            font-weight: bold;
+        }
+
+        .cal-day .dot {
+            height: 3px;
+            width: 3px;
+            background-color: var(--bts-red);
+            border-radius: 50%;
+            display: inline-block;
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* CONTENIDO PRINCIPAL */
         .main-content {
-            padding: 0 var(--header-padding) 40px;
-            flex: 1;
-        }
-
-        .table-header, .event-row {
-            display: grid;
-            grid-template-columns: 80px 1fr 160px 80px;
-            align-items: center;
-            gap: 15px;
+            padding: 20px;
+            flex-grow: 1;
         }
 
         .table-header {
-            padding: 15px 0;
+            display: grid;
+            grid-template-columns: 80px 1fr 80px 60px;
+            gap: 10px;
+            font-weight: bold;
+            color: var(--bts-text-muted);
+            font-size: 0.75rem;
+            padding-bottom: 10px;
             border-bottom: 2px solid var(--bts-black);
-            font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+        }
+
+        #events-list {
+            margin-bottom: 100px;
         }
 
         .event-row {
-            padding: 20px 0;
+            display: grid;
+            grid-template-columns: 80px 1fr 80px 60px;
+            gap: 10px;
+            align-items: center;
+            padding: 15px 0;
             border-bottom: 1px solid var(--bts-gray-border);
+            font-size: 0.9rem;
         }
 
-        .event-row.past-event {
-            opacity: 0.5;
-            background: #fafafa;
+        .event-row:hover {
+            background-color: #fafafa;
         }
 
-        .past-tag {
-            font-size: 0.55rem;
-            background: #999;
-            color: white;
-            padding: 2px 4px;
-            font-weight: 900;
-            margin-left: 5px;
-            vertical-align: middle;
+        /* BOTONES Y FORMULARIOS */
+        .footer-controls {
+            padding: 15px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--bts-white);
+            border-top: 1px solid var(--bts-gray-border);
+            z-index: 10;
         }
 
-        .date-col { font-size: 1.2rem; font-weight: 900; text-align: center; }
-        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; }
-
-        .info-col .event-name { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
-        .info-col button.details-trigger {
-            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); 
-            border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
-        }
-
-        .sync-col { display: flex; flex-direction: column; gap: 6px; }
-        .time-pill {
-            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
-            font-weight: 700; font-size: 0.75rem; border-radius: 2px;
-        }
-        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; }
-
-        .action-col { display: flex; gap: 10px; justify-content: flex-end; }
-        .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
-        .edit-btn:hover { color: var(--bts-black); }
-        .delete-btn:hover { color: var(--bts-red); }
-
-        /* MODALES */
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
-        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
-        .modal-body h2 { font-size: 1.8rem; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; }
-        
-        .detail-item { margin-bottom: 15px; }
-        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); }
-        .detail-item p { font-size: 1rem; font-weight: 700; }
-
-        /* Contenedor de botones en el modal */
-        .modal-footer-actions {
-            display: flex; 
-            gap: 10px; 
-            margin-top: 20px; 
-            align-items: stretch; /* Esto asegura que el botón de copiar tenga la misma altura que el link */
-        }
-
-        .modal-link-btn { 
-            flex: 1;
-            padding: 15px; 
-            background: black; 
-            color: white; 
-            text-align: center; 
-            text-decoration: none; 
-            font-weight: 900; 
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-copy-btn {
-            width: 50px;
-            background: black;
+        .add-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--bts-black);
+            color: var(--bts-white);
             border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.2s;
+        }
+
+        #event-form {
+            display: none;
+            background: var(--bts-white);
+            padding: 20px;
+            border-top: 2px solid var(--bts-black);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 20;
+        }
+
+        .form-grid {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid var(--bts-gray-border);
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .save-btn {
+            background: var(--bts-black);
+            color: var(--bts-white);
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: var(--bts-gray-light);
+            color: var(--bts-black);
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
             justify-content: center;
-            transition: background 0.2s;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
         }
 
-        .modal-copy-btn:hover {
-            background: var(--bts-red);
+        .modal-content {
+            background: var(--bts-white);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
         }
 
-        #event-form { display: none; background: var(--bts-gray-light); padding: 20px; border: 2px solid var(--bts-black); margin-top: 10px; }
-        .form-grid { display: flex; flex-direction: column; gap: 12px; }
-        .form-grid input { padding: 12px; border: 1px solid #ccc; width: 100%; }
-        .save-btn { background: var(--bts-black); color: white; padding: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
-        .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
-        .footer-controls { padding: 20px 0; display: flex; justify-content: center; }
-        .add-btn { background: var(--bts-black); color: white; border: none; padding: 14px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 300px; }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
 
-        @media (max-width: 500px) {
-            .table-header { display: none; }
-            .event-row { grid-template-columns: 60px 1fr 40px; grid-template-areas: "date info action" "date sync action"; }
-            .date-col { grid-area: date; }
-            .info-col { grid-area: info; }
-            .sync-col { grid-area: sync; flex-direction: row; gap: 10px; }
-            .action-col { grid-area: action; flex-direction: column; }
+        /* MEDIA QUERIES PARA TABLA EN MÓVIL */
+        @media (max-width: 400px) {
+            .table-header, .event-row {
+                grid-template-columns: 60px 1fr 65px 40px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -288,37 +305,29 @@
 
     <header>
         <div class="header-left">
-            <div class="title-group">
-                <h1>Schedule</h1>
-                <p>BTS Official Event Tracker</p>
+            <div class="header-top">
+                <img src="arirang logo.png" alt="Arirang Logo">
+                <div class="album-container">
+                    <img src="arirang album.png" alt="Album Art">
+                </div>
             </div>
-            <div class="album-container">
-                <img src="arirang album.png" alt="Arirang Album">
+
+            <div class="clocks-container">
+                <div class="clock-item">
+                    <span class="clock-label">PE 🇵🇪</span>
+                    <span id="pe-time">00:00:00</span>
+                </div>
+                <div class="clock-item">
+                    <span class="clock-label">KR 🇰🇷</span>
+                    <span id="kr-time">00:00:00</span>
+                </div>
             </div>
         </div>
 
         <div class="header-right">
-            <div class="clocks-wrapper">
-                <div class="clock-item">
-                    <div class="label-box"><span>Peru</span></div>
-                    <div id="pe-time" class="clock-time">--:--:--</div>
-                </div>
-                <div class="clock-item">
-                    <div class="label-box"><span>Korea</span></div>
-                    <div id="kr-time" class="clock-time">--:--:--</div>
-                </div>
-            </div>
-            
-            <div id="calendar-widget" class="calendar-container">
-                <div id="cal-month" class="calendar-header">Cargando...</div>
+            <div class="calendar-wrapper">
                 <div class="calendar-grid">
-                    <div class="calendar-day-head">D</div>
-                    <div class="calendar-day-head">L</div>
-                    <div class="calendar-day-head">M</div>
-                    <div class="calendar-day-head">X</div>
-                    <div class="calendar-day-head">J</div>
-                    <div class="calendar-day-head">V</div>
-                    <div class="calendar-day-head">S</div>
+                    <div class="calendar-day-head">D</div><div class="calendar-day-head">L</div><div class="calendar-day-head">M</div><div class="calendar-day-head">M</div><div class="calendar-day-head">J</div><div class="calendar-day-head">V</div><div class="calendar-day-head">S</div>
                 </div>
                 <div id="cal-days" class="calendar-grid"></div>
             </div>
@@ -354,8 +363,10 @@
 
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <span id="modal-close" class="modal-close">×</span>
-            <div class="modal-body" id="modal-body"></div>
+            <button class="close-modal" id="modal-close">&times;</button>
+            <div id="modal-body">
+                <!-- Se llena vía JS -->
+            </div>
         </div>
     </div>
 
