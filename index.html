@@ -13,7 +13,7 @@
             --bts-gray-light: #f6f6f6;
             --bts-gray-border: #e0e0e0;
             --bts-text-muted: #757575;
-            --header-padding: 15px; /* Ajustado para móviles */
+            --header-padding: 20px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,111 +29,145 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER ADAPTADO PARA MÓVIL --- */
+        /* Contenedor de bloques con soporte para celular */
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            flex-direction: column; /* Celular: uno arriba del otro */
+            gap: 20px;
             border-bottom: 1px solid var(--bts-gray-border);
         }
 
-        .header-top {
+        /* En pantallas más anchas se ponen uno al lado del otro */
+        @media (min-width: 650px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        /* Bloque 1: Schedule & Spotify */
+        .block-1 {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .brand-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            line-height: 0.8;
+            text-transform: uppercase;
+        }
+
+        .brand-header p {
+            font-size: 0.65rem;
+            color: var(--bts-red);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        .album-container {
             width: 100%;
-            gap: 10px;
-        }
-
-        .logo-container img {
-            height: 32px; /* Un poco más pequeño para que entre el reproductor */
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* Reproductor de Álbum */
-        .album-player {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f9f9f9;
-            padding: 4px 10px;
-            border-radius: 50px;
-            border: 1px solid #eee;
-            cursor: pointer;
-            max-width: 60%; /* Evita que empuje al logo */
+            max-width: 280px;
+            margin-top: 5px;
         }
 
         .album-art {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
+            width: 100%;
+            aspect-ratio: 1/1;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--bts-gray-border);
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .album-info {
+        .spotify-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .spotify-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid var(--bts-black);
+            background: var(--bts-white);
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: var(--bts-black);
+        }
+
+        /* Bloque 2: Relojes y Calendario */
+        .block-2 {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-        }
-
-        .album-title {
-            font-size: 0.65rem;
-            font-weight: bold;
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .album-status {
-            font-size: 0.55rem;
-            color: var(--bts-red);
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        /* Relojes con Banderas */
-        .clocks-container {
-            display: flex;
             gap: 15px;
-            justify-content: center;
-            width: 100%;
+            max-width: 320px;
         }
 
-        .clock-item {
+        .clocks-grid {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 1rem;
+            gap: 10px;
         }
 
-        .flag {
-            width: 18px;
-            height: 12px;
-            object-fit: cover;
-            border-radius: 1px;
-        }
-
-        /* Calendario - Asegurando que cuadre al 100% */
-        .calendar-section {
-            width: 100%;
+        .clock-card {
+            flex: 1;
             background: var(--bts-gray-light);
-            border-radius: 12px;
-            padding: 12px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
         }
 
-        .cal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: bold;
+        .clock-card.korea {
+            border-left: 3px solid var(--bts-red);
+        }
+
+        .clock-label {
+            font-size: 0.55rem;
+            font-weight: 800;
+            color: var(--bts-text-muted);
             text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .clock-time {
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .calendar-box {
+            border: 1px solid var(--bts-gray-border);
+            padding: 12px;
+            background: var(--bts-white);
+        }
+
+        .cal-month-title {
             font-size: 0.75rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .calendar-grid {
@@ -144,155 +178,138 @@
         }
 
         .cal-day-name {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
+            font-weight: 800;
             color: var(--bts-text-muted);
             padding-bottom: 5px;
-            font-weight: bold;
         }
 
-        .cal-day {
-            aspect-ratio: 1/1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            cursor: pointer;
-            border-radius: 4px;
+        .cal-day-num {
+            font-size: 0.7rem;
+            padding: 4px 0;
+            font-weight: 500;
         }
 
-        .cal-day.today { background: var(--bts-red); color: white; font-weight: bold; }
-        .cal-day.has-event { border-bottom: 2px solid var(--bts-red); }
+        .cal-day-num.today {
+            background: var(--bts-black);
+            color: var(--bts-white);
+            font-weight: 900;
+        }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* Tabla de eventos y resto del contenido original */
         .main-content {
+            padding: 20px;
             flex: 1;
-            padding: 15px;
         }
 
         .table-header {
             display: grid;
-            grid-template-columns: 60px 1fr 65px 45px;
-            padding: 8px 0;
+            grid-template-columns: 80px 1fr 100px 60px;
+            padding: 10px 0;
             border-bottom: 2px solid var(--bts-black);
-            font-weight: bold;
             font-size: 0.7rem;
+            font-weight: 900;
             text-transform: uppercase;
         }
 
-        .event-row {
+        .event-item {
             display: grid;
-            grid-template-columns: 60px 1fr 65px 45px;
-            padding: 10px 0;
+            grid-template-columns: 80px 1fr 100px 60px;
+            padding: 15px 0;
             border-bottom: 1px solid var(--bts-gray-border);
-            align-items: center;
             font-size: 0.8rem;
+            align-items: center;
         }
 
         .add-btn {
             background: var(--bts-black);
-            color: white;
-            border: none;
+            color: var(--bts-white);
             padding: 12px;
             width: 100%;
-            border-radius: 8px;
-            font-weight: bold;
+            border: none;
+            font-weight: 900;
+            text-transform: uppercase;
             cursor: pointer;
-            margin-top: 15px;
-            font-size: 0.9rem;
+            margin-top: 20px;
         }
 
-        /* Modales y Formularios */
-        .modal {
-            display: none;
+        #event-form {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border: 1px solid black;
+            display: none;
+            z-index: 100;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            z-index: 1000;
         }
 
         .modal-content {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 350px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
         }
-
-        #event-form {
-            display: none;
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #ddd;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .save-btn { background: #000; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 6px; }
-        .cancel-btn { background: #eee; border: none; padding: 12px; width: 100%; margin-top: 5px; border-radius: 6px; }
-
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Logo y Reproductor en una fila que no se rompe -->
-        <div class="header-top">
-            <div class="logo-container">
-                <img src="arirang logo.png" alt="Arirang Logo">
+        <!-- Bloque 1: Schedule / Spotify -->
+        <div class="block-1">
+            <div class="brand-header">
+                <h1>Schedule</h1>
+                <p>BTS OFFICIAL EVENT TRACKER</p>
             </div>
-            
-            <div class="album-player album-container">
-                <img src="arirang album.png" alt="Album Art" class="album-art">
-                <div class="album-info">
-                    <span class="album-title">Arirang Radio</span>
-                    <span class="album-status">On Air</span>
+
+            <div class="album-container">
+                <div id="spotify-player-root">
+                    <div class="album-art" id="album-btn">
+                        <img src="arirang album.png" alt="Arirang Album" onerror="this.src='https://i.scdn.co/image/ab67616d0000b2737609756184d09355442f4c28'">
+                    </div>
+                </div>
+                
+                <div class="spotify-controls">
+                    <button class="spotify-btn" id="btn-change-playlist">Cambiar Playlist</button>
+                    <a href="#" class="spotify-btn" id="btn-open-app">Abrir App</a>
                 </div>
             </div>
         </div>
 
-        <!-- Relojes centrados -->
-        <div class="clocks-container">
-            <div class="clock-item">
-                <img src="https://flagcdn.com/w40/pe.png" class="flag" alt="PE">
-                <span id="pe-time">00:00:00</span>
-            </div>
-            <div class="clock-item">
-                <img src="https://flagcdn.com/w40/kr.png" class="flag" alt="KR">
-                <span id="kr-time">00:00:00</span>
-            </div>
-        </div>
-
-        <!-- Calendario que ocupa todo el ancho -->
-        <div class="calendar-section">
-            <div class="cal-header">
-                <span id="cal-month">Marzo 2024</span>
-                <div style="display: flex; gap: 15px;">
-                    <span id="prev-month" style="cursor:pointer; padding: 5px;">❮</span>
-                    <span id="next-month" style="cursor:pointer; padding: 5px;">❯</span>
+        <!-- Bloque 2: Relojes / Calendario -->
+        <div class="block-2">
+            <div class="clocks-grid">
+                <div class="clock-card">
+                    <div class="clock-label">Perú (-5)</div>
+                    <div id="pe-time" class="clock-time">00:00:00</div>
+                </div>
+                <div class="clock-card korea">
+                    <div class="clock-label">Korea (+9)</div>
+                    <div id="kr-time" class="clock-time">00:00:00</div>
                 </div>
             </div>
-            <div class="calendar-grid">
-                <div class="cal-day-name">D</div>
-                <div class="cal-day-name">L</div>
-                <div class="cal-day-name">M</div>
-                <div class="cal-day-name">M</div>
-                <div class="cal-day-name">J</div>
-                <div class="cal-day-name">V</div>
-                <div class="cal-day-name">S</div>
+
+            <div class="calendar-box">
+                <div class="cal-month-title" id="cal-month-title">MARZO 2024</div>
+                <div class="calendar-grid">
+                    <div class="cal-day-name">L</div><div class="cal-day-name">M</div><div class="cal-day-name">M</div>
+                    <div class="cal-day-name">J</div><div class="cal-day-name">V</div><div class="cal-day-name">S</div><div class="cal-day-name">D</div>
+                </div>
+                <div id="cal-days" class="calendar-grid">
+                    <!-- Dinámico -->
+                </div>
             </div>
-            <div id="cal-days" class="calendar-grid"></div>
         </div>
     </header>
 
@@ -300,30 +317,31 @@
         <div class="table-header">
             <div>Fecha</div>
             <div>Evento</div>
-            <div>Hora</div>
+            <div>Horario</div>
             <div style="text-align: right;">Acción</div>
         </div>
 
-        <div id="events-list">
-            <!-- Eventos generados por script.js -->
-        </div>
+        <div id="events-list"></div>
 
-        <button id="btn-toggle-form" class="add-btn">+ NUEVO EVENTO</button>
+        <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
 
         <div id="event-form">
+            <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;">Nuevo Evento</h3>
             <input type="hidden" id="edit-id">
-            <input type="text" id="in-title" placeholder="Nombre del Evento">
-            <input type="datetime-local" id="in-date">
-            <input type="url" id="in-link" placeholder="URL opcional">
-            <button id="btn-save" class="save-btn">Guardar</button>
-            <button id="btn-cancel" class="cancel-btn">Cerrar</button>
+            <input type="text" id="in-title" placeholder="Nombre del Evento" style="width:100%; margin-bottom:10px; padding:8px;">
+            <input type="datetime-local" id="in-date" style="width:100%; margin-bottom:10px; padding:8px;">
+            <input type="url" id="in-link" placeholder="Link del Evento (opcional)" style="width:100%; margin-bottom:10px; padding:8px;">
+            <button id="btn-save" style="width:100%; background:black; color:white; padding:10px; border:none; font-weight:bold; cursor:pointer;">GUARDAR</button>
+            <button id="btn-cancel" style="width:100%; background:none; border:none; padding:10px; cursor:pointer;">Cancelar</button>
         </div>
     </main>
 
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <div id="modal-body"></div>
-            <button id="modal-close" class="cancel-btn">Cerrar</button>
+            <h2 id="modal-title" style="margin-bottom:10px; text-transform: uppercase; font-size: 1.2rem;"></h2>
+            <p id="modal-date" style="color:var(--bts-text-muted); margin-bottom:20px; font-size: 0.85rem;"></p>
+            <div id="modal-actions"></div>
+            <button id="modal-close" style="margin-top:20px; width:100%; padding:10px; background:#f0f0f0; border:none; font-weight:bold; cursor:pointer;">CERRAR</button>
         </div>
     </div>
 
