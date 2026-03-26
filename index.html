@@ -71,11 +71,13 @@
 
         .title-group h1 {
             font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif;
-            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-size: clamp(2rem, 7vw, 3.2rem);
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.6px;
             line-height: 0.9;
+            max-width: 100%;
+            white-space: nowrap;
         }
 
         .title-group p {
@@ -240,7 +242,7 @@
 
         .table-header, .event-row {
             display: grid;
-            grid-template-columns: 80px 1fr 160px 80px;
+            grid-template-columns: 80px 1fr 145px 58px;
             align-items: center;
             gap: 15px;
         }
@@ -248,13 +250,11 @@
         .table-header {
             padding: 15px 0;
             border-bottom: 2px solid var(--bts-black);
-            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             font-size: 0.7rem;
             letter-spacing: 1px;
-            -webkit-text-stroke: 0.14px transparent;
-            text-shadow: 0.22px 0 currentColor, -0.22px 0 currentColor;
         }
 
         .event-row {
@@ -277,24 +277,24 @@
             vertical-align: middle;
         }
 
-        .date-col { font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; letter-spacing: 0.2px; }
+        .date-col { font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; letter-spacing: 0.1px; }
         .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; font-weight: 900; letter-spacing: 0.6px; }
 
-        .info-col .event-name { font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; line-height: 1.05; letter-spacing: 0.1px; }
+        .info-col .event-name { font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; font-size: 1.08rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; line-height: 1.08; letter-spacing: 0.05px; }
         .info-col button.details-trigger {
             background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; 
             border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
         }
 
-        .sync-col { display: flex; flex-direction: column; gap: 6px; }
+        .sync-col { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
         .time-pill {
-            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
-            font-weight: 900; font-size: 0.75rem; border-radius: 2px;
+            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: flex-start; gap: 12px;
+            font-weight: 700; font-size: 0.75rem; border-radius: 2px;
         }
-        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; letter-spacing: 0.4px; }
-        .time-pill span:last-child { font-weight: 900; }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; font-family: 'Arial Black', 'Archivo Black', Arial, Helvetica, sans-serif; letter-spacing: 0.35px; min-width: 20px; }
+        .time-pill span:last-child { font-weight: 700; }
 
-        .action-col { display: flex; gap: 10px; justify-content: flex-end; }
+        .action-col { display: flex; gap: 8px; justify-content: center; padding-right: 6px; }
         .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
         .edit-btn:hover { color: var(--bts-black); }
         .delete-btn:hover { color: var(--bts-red); }
@@ -399,8 +399,8 @@
             }
 
             .title-group h1 {
-                font-size: clamp(2.15rem, 8vw, 3.15rem);
-                letter-spacing: 0.8px;
+                font-size: clamp(1.95rem, 7vw, 2.8rem);
+                letter-spacing: 1.3px;
                 line-height: 0.95;
             }
 
@@ -471,7 +471,7 @@
             }
 
             .table-header, .event-row {
-                grid-template-columns: 72px minmax(0, 1fr) 132px 58px;
+                grid-template-columns: 68px minmax(0, 1fr) 118px 44px;
                 gap: 10px;
             }
 
@@ -492,8 +492,8 @@
             }
 
             .info-col .event-name {
-                font-size: 0.92rem;
-                line-height: 1.15;
+                font-size: 0.88rem;
+                line-height: 1.12;
                 word-break: break-word;
             }
 
@@ -502,12 +502,14 @@
             }
 
             .time-pill {
-                padding: 4px 6px;
-                font-size: 0.68rem;
+                padding: 4px 4px;
+                font-size: 0.66rem;
+                gap: 8px;
             }
 
             .action-col {
                 gap: 4px;
+                padding-right: 2px;
             }
         }
 
@@ -518,8 +520,8 @@
             }
 
             .title-group h1 {
-                font-size: clamp(1.9rem, 9vw, 2.75rem);
-                letter-spacing: 0.7px;
+                font-size: clamp(1.7rem, 8vw, 2.35rem);
+                letter-spacing: 1.4px;
             }
 
             .title-group p {
@@ -559,16 +561,16 @@
 
             .table-header {
                 display: grid;
-                grid-template-columns: 52px minmax(0, 1fr) 112px 30px;
-                gap: 8px;
+                grid-template-columns: 54px minmax(0, 1fr) 96px 40px;
+                gap: 10px;
                 font-size: 0.56rem;
                 letter-spacing: 0.7px;
                 padding: 12px 0;
             }
 
             .event-row {
-                grid-template-columns: 52px minmax(0, 1fr) 112px 30px;
-                gap: 8px;
+                grid-template-columns: 54px minmax(0, 1fr) 96px 40px;
+                gap: 10px;
                 align-items: start;
                 padding: 14px 0;
             }
@@ -584,8 +586,8 @@
             }
 
             .info-col .event-name {
-                font-size: 0.82rem;
-                line-height: 1.1;
+                font-size: 0.76rem;
+                line-height: 1.08;
                 margin-bottom: 6px;
             }
 
@@ -605,20 +607,23 @@
 
             .time-pill {
                 padding: 2px 0;
-                font-size: 0.58rem;
+                font-size: 0.56rem;
                 background: transparent;
-                justify-content: space-between;
+                justify-content: flex-start;
+                gap: 8px;
             }
 
             .time-pill .tag {
-                font-size: 0.58rem;
+                font-size: 0.56rem;
+                min-width: 18px;
             }
 
             .action-col {
                 flex-direction: column;
-                align-items: flex-end;
-                gap: 2px;
+                align-items: center;
+                gap: 3px;
                 padding-top: 2px;
+                padding-right: 6px;
             }
 
             .action-btn {
@@ -698,7 +703,7 @@
             <div>Fecha</div>
             <div>Evento</div>
             <div>Horario</div>
-            <div style="text-align: right;">Acción</div>
+            <div style="text-align: center;">Acción</div>
         </div>
 
         <div id="events-list"></div>
