@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff1242">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ARMY Schedule">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <title>ARMY Schedule Pro</title>
     <style>
@@ -74,6 +80,39 @@
             display: block;
             cursor: pointer;
         }
+
+        .spotify-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            margin-top: 8px;
+            padding: 0 4px;
+            width: min(100%, 380px);
+        }
+
+        .spotify-control-btn,
+        .spotify-control-link {
+            background: none;
+            border: none;
+            color: var(--bts-text-muted);
+            font-size: 0.68rem;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .spotify-control-btn:hover,
+        .spotify-control-link:hover {
+            color: var(--bts-black);
+        }
+
 
         .clocks-wrapper {
             display: flex;
@@ -311,6 +350,19 @@
                 max-width: 260px;
             }
 
+            .spotify-controls {
+                width: 100%;
+                max-width: 260px;
+                padding: 0;
+                gap: 8px;
+            }
+
+            .spotify-control-btn,
+            .spotify-control-link {
+                font-size: 0.58rem;
+                gap: 4px;
+            }
+
             .clocks-wrapper {
                 justify-content: space-between;
                 gap: 10px;
@@ -481,6 +533,10 @@
                 max-width: none;
                 margin-left: 0;
             }
+
+            .spotify-controls {
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -495,6 +551,7 @@
             <div class="album-container">
                 <img src="arirang album.png" alt="Arirang Album">
             </div>
+            <div id="spotify-controls" class="spotify-controls"></div>
         </div>
 
         <div class="header-right">

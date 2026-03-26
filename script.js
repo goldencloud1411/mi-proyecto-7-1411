@@ -32,22 +32,13 @@
         const SPOTIFY_URL_KEY = 'bts_pro_spotify';
         let savedSpotifyUrl = localStorage.getItem(SPOTIFY_URL_KEY) || 'https://open.spotify.com/playlist/37i9dQZF1DX08mhnhv6g9b';
 
-        // Crear o recuperar el contenedor de controles
-        let controlsDiv = document.getElementById('spotify-controls');
-        if (!controlsDiv) {
-            controlsDiv = document.createElement('div');
-            controlsDiv.id = 'spotify-controls';
-            controlsDiv.style.display = 'flex';
-            controlsDiv.style.justifyContent = 'space-between';
-            controlsDiv.style.marginTop = '8px';
-            controlsDiv.style.padding = '0 5px';
-            container.parentNode.insertBefore(controlsDiv, container.nextSibling);
-        }
+        const controlsDiv = document.getElementById('spotify-controls');
+        if (!controlsDiv) return;
 
         const renderControls = (url) => {
             controlsDiv.innerHTML = `
-                <button id="change-spotify-btn" style="background:none; border:none; color:#757575; font-size:0.6rem; cursor:pointer; font-weight:bold; text-transform:uppercase;">⚙️ Cambiar Playlist</button>
-                <a href="${url}" target="_blank" style="color:#757575; font-size:0.6rem; text-decoration:none; font-weight:bold; text-transform:uppercase;">🔗 Abrir App</a>
+                <button id="change-spotify-btn" class="spotify-control-btn" type="button">⚙️ <span>Cambiar Playlist</span></button>
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="spotify-control-link">🔗 <span>Abrir App</span></a>
             `;
 
             document.getElementById('change-spotify-btn').onclick = () => {
@@ -183,6 +174,17 @@
         }
     };
 
+
+    const registerServiceWorker = () => {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js').catch((error) => {
+                    console.error('Service worker error:', error);
+                });
+            });
+        }
+    };
+
     const render = () => {
         const list = document.getElementById('events-list');
         if(!list) return;
@@ -229,6 +231,7 @@
     };
 
     document.addEventListener('DOMContentLoaded', () => {
+        registerServiceWorker();
         loadData();
         render();
         setupSpotifyPlayer();
