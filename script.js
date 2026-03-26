@@ -1,5 +1,5 @@
 (function() {
-    const STORAGE_KEY = 'bts_pro_events';
+    const STORAGE_KEY = 'bts_pro_events_v2';
     let events = [];
 
     const loadData = () => {
@@ -11,240 +11,126 @@
 
     const saveData = () => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+        renderEvents();
+        renderCalendar();
     };
 
     const updateClocks = () => {
         const now = new Date();
-        const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Lima' });
-        const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         
-        const peEl = document.getElementById('pe-time');
-        const krEl = document.getElementById('kr-time');
-        if (peEl) peEl.textContent = pe;
-        if (krEl) krEl.textContent = kr;
-    };
-
-    // Función para manejar el reproductor de Spotify configurable
-    const setupSpotifyPlayer = () => {
-        const container = document.querySelector('.album-container');
-        if (!container) return;
-
-        const SPOTIFY_URL_KEY = 'bts_pro_spotify';
-        let savedSpotifyUrl = localStorage.getItem(SPOTIFY_URL_KEY) || 'https://open.spotify.com/playlist/37i9dQZF1DX08mhnhv6g9b';
-
-        // Crear o recuperar el contenedor de controles
-        let controlsDiv = document.getElementById('spotify-controls');
-        if (!controlsDiv) {
-            controlsDiv = document.createElement('div');
-            controlsDiv.id = 'spotify-controls';
-            controlsDiv.style.display = 'flex';
-            controlsDiv.style.justifyContent = 'space-between';
-            controlsDiv.style.marginTop = '8px';
-            controlsDiv.style.padding = '0 5px';
-            container.parentNode.insertBefore(controlsDiv, container.nextSibling);
-        }
-
-        const renderControls = (url) => {
-            controlsDiv.innerHTML = `
-                <button id="change-spotify-btn" style="background:none; border:none; color:#757575; font-size:0.6rem; cursor:pointer; font-weight:bold; text-transform:uppercase;">⚙️ Cambiar Playlist</button>
-                <a href="${url}" target="_blank" style="color:#757575; font-size:0.6rem; text-decoration:none; font-weight:bold; text-transform:uppercase;">🔗 Abrir App</a>
-            `;
-
-            document.getElementById('change-spotify-btn').onclick = () => {
-                const newLink = prompt("Pega el enlace de Spotify:", url);
-                if (newLink && newLink.includes("spotify.com")) {
-                    localStorage.setItem(SPOTIFY_URL_KEY, newLink);
-                    window.location.reload(); 
-                }
-            };
-        };
-
-        renderControls(savedSpotifyUrl);
-
-        container.addEventListener('click', function() {
-            if (document.getElementById('spotify-player')) return; 
-
-            let embedUrl = "";
-            try {
-                const urlObj = new URL(savedSpotifyUrl);
-                const pathParts = urlObj.pathname.split('/').filter(p => p);
-                if (pathParts.length >= 2) {
-                    const type = pathParts[0]; 
-                    const id = pathParts[1];
-                    embedUrl = `https://open.spotify.com/embed/${type}/${id}?utm_source=generator`;
-                }
-            } catch(e) {
-                embedUrl = `https://open.spotify.com/embed/playlist/37i9dQZF1DX08mhnhv6g9b?utm_source=generator`;
-            }
-
-            const iframe = document.createElement('iframe');
-            iframe.id = 'spotify-player';
-            iframe.src = embedUrl;
-            iframe.width = "100%";
-            iframe.height = "240";
-            iframe.frameBorder = "0";
-            iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-            iframe.loading = "lazy";
-            iframe.style.border = "none";
-            iframe.style.display = "block";
-
-            container.innerHTML = '';
-            container.appendChild(iframe);
-            
-            // Re-renderizar controles debajo del iframe
-            renderControls(savedSpotifyUrl);
-        }, { once: true });
+        document.getElementById('pe-time').textContent = now.toLocaleTimeString('es-PE', { ...options, timeZone: 'America/Lima' });
+        document.getElementById('kr-time').textContent = now.toLocaleTimeString('ko-KR', { ...options, timeZone: 'Asia/Seoul' });
     };
 
     const renderCalendar = () => {
         const calDays = document.getElementById('cal-days');
-        const calMonth = document.getElementById('cal-month');
-        if(!calDays) return;
-
-        const now = new Date();
-        const currentMonth = now.getMonth();
-        const currentYear = now.getFullYear();
-        const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        
-        calMonth.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+        if (!calDays) return;
         calDays.innerHTML = '';
         
-        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        
+        const monthNames = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
+        document.getElementById('cal-month-year').textContent = `${monthNames[month]} ${year}`;
 
-        for (let i = 0; i < firstDay; i++) calDays.appendChild(document.createElement('div'));
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Ajuste para lunes como primer día (0=Dom -> 6=Dom)
+        let startingDay = firstDay === 0 ? 6 : firstDay - 1;
 
-        for (let day = 1; day <= daysInMonth; day++) {
-            const div = document.createElement('div');
-            div.className = 'calendar-day';
-            div.textContent = day;
+        for (let i = 0; i < startingDay; i++) {
+            const empty = document.createElement('div');
+            calDays.appendChild(empty);
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dayEl = document.createElement('div');
+            dayEl.className = 'day-num';
+            dayEl.textContent = d;
             
-            const dayEvents = events.filter(e => {
-                const d = new Date(e.date);
-                return d.getDate() === day && d.getMonth() === currentMonth && d.getFullYear() === currentYear;
-            });
-
-            if (dayEvents.length > 0) {
-                div.classList.add('has-event');
-                
-                // Efecto Hover: Burbuja y Resaltado en Tabla
-                div.addEventListener('mouseenter', (e) => {
-                    // 1. Crear la burbuja (Tooltip)
-                    const tooltip = document.createElement('div');
-                    tooltip.id = 'calendar-tooltip';
-                    tooltip.style.position = 'fixed';
-                    tooltip.style.backgroundColor = 'black';
-                    tooltip.style.color = 'white';
-                    tooltip.style.padding = '8px 12px';
-                    tooltip.style.borderRadius = '4px';
-                    tooltip.style.fontSize = '0.7rem';
-                    tooltip.style.zIndex = '1000';
-                    tooltip.style.pointerEvents = 'none';
-                    tooltip.style.boxShadow = '0 4px 10px rgba(0,0,0,0.3)';
-                    tooltip.style.textTransform = 'uppercase';
-                    tooltip.style.fontWeight = 'bold';
-                    tooltip.style.maxWidth = '200px';
-
-                    const rect = div.getBoundingClientRect();
-                    tooltip.style.left = `${rect.left + rect.width / 2}px`;
-                    tooltip.style.top = `${rect.top - 10}px`;
-                    tooltip.style.transform = 'translate(-50%, -100%)';
-
-                    let content = dayEvents.map(ev => `• ${ev.title}`).join('<br>');
-                    tooltip.innerHTML = content;
-                    document.body.appendChild(tooltip);
-
-                    // 2. Resaltar en la tabla
-                    dayEvents.forEach(ev => {
-                        const row = document.querySelector(`.event-row[data-row-id="${ev.id}"]`);
-                        if(row) {
-                            row.style.backgroundColor = '#fff0f3';
-                            row.style.borderLeft = '4px solid #ff1242';
-                        }
-                    });
-                });
-
-                div.addEventListener('mouseleave', () => {
-                    // 1. Quitar la burbuja
-                    const tooltip = document.getElementById('calendar-tooltip');
-                    if (tooltip) tooltip.remove();
-
-                    // 2. Quitar resaltado de la tabla
-                    dayEvents.forEach(ev => {
-                        const row = document.querySelector(`.event-row[data-row-id="${ev.id}"]`);
-                        if(row) {
-                            row.style.backgroundColor = '';
-                            row.style.borderLeft = '';
-                        }
-                    });
-                });
-            }
-            calDays.appendChild(div);
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            
+            if (d === now.getDate()) dayEl.classList.add('today');
+            
+            const hasEvent = events.some(e => e.date.startsWith(dateStr));
+            if (hasEvent) dayEl.classList.add('has-event');
+            
+            calDays.appendChild(dayEl);
         }
     };
 
-    const render = () => {
+    const renderEvents = () => {
         const list = document.getElementById('events-list');
-        if(!list) return;
         list.innerHTML = '';
-        renderCalendar();
 
-        if (events.length === 0) {
-            list.innerHTML = `<div style="padding:60px 20px; text-align:center; color:#bbb; font-weight:900; text-transform:uppercase; font-size:0.7rem;">No hay eventos programados</div>`;
-            return;
-        }
+        // Ordenar por fecha
+        const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-        const now = new Date();
+        sorted.forEach(ev => {
+            const dateObj = new Date(ev.date);
+            const dateStr = dateObj.toLocaleDateString('es-PE', { day: '2-digit', month: 'short' });
+            const timeStr = dateObj.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
 
-        events.forEach(ev => {
-            const d = new Date(ev.date);
-            const isPast = d < now;
-            const day = d.getDate();
-            const month = d.toLocaleDateString('es-ES', { month: 'short' }).toUpperCase();
-            
-            const tOpt = { hour: '2-digit', minute: '2-digit', hour12: true };
-            const peT = d.toLocaleTimeString('en-US', { ...tOpt, timeZone: 'America/Lima' });
-            const krT = d.toLocaleTimeString('en-US', { ...tOpt, timeZone: 'Asia/Seoul' });
-
-            const row = document.createElement('div');
-            row.className = `event-row ${isPast ? 'past-event' : ''}`;
-            row.setAttribute('data-row-id', ev.id); // ID para vinculación con calendario
-            row.innerHTML = `
-                <div class="date-col"><span>${month}</span>${day}</div>
-                <div class="info-col">
-                    <div class="event-name">${ev.title} ${isPast ? '<span class="past-tag">PAST</span>' : ''}</div>
-                    <button class="details-trigger" data-id="${ev.id}">DETALLES</button>
-                </div>
-                <div class="sync-col">
-                    <div class="time-pill"><span class="tag">PE</span><span>${peT}</span></div>
-                    <div class="time-pill"><span class="tag">KR</span><span>${krT}</span></div>
-                </div>
-                <div class="action-col">
-                    <button class="action-btn edit-btn" data-id="${ev.id}">✎</button>
-                    <button class="action-btn delete-btn" data-id="${ev.id}">×</button>
-                </div>
+            const div = document.createElement('div');
+            div.className = 'event-item';
+            div.innerHTML = `
+                <div class="event-date">${dateStr}</div>
+                <div class="event-name">${ev.title}</div>
+                <div class="event-time">${timeStr}</div>
+                <button class="action-btn" data-id="${ev.id}">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </button>
             `;
-            list.appendChild(row);
+            list.appendChild(div);
+        });
+
+        // Eventos de los botones de detalle
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.onclick = () => showDetails(btn.getAttribute('data-id'));
         });
     };
 
+    const showDetails = (id) => {
+        const ev = events.find(e => e.id === id);
+        if (!ev) return;
+
+        const modal = document.getElementById('details-modal');
+        const body = document.getElementById('modal-body');
+        
+        body.innerHTML = `
+            <h2 style="margin-bottom:10px;">${ev.title}</h2>
+            <p style="color:var(--bts-text-muted); margin-bottom:20px;">${new Date(ev.date).toLocaleString()}</p>
+            ${ev.link ? `<a href="${ev.link}" target="_blank" style="display:block; background:var(--bts-black); color:white; text-align:center; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold;">Ir al Evento</a>` : ''}
+            <button id="btn-delete-event" data-id="${ev.id}" style="margin-top:20px; background:none; border:none; color:var(--bts-red); cursor:pointer; font-size:0.8rem; width:100%;">Eliminar Evento</button>
+        `;
+        
+        modal.style.display = 'flex';
+        
+        document.getElementById('btn-delete-event').onclick = () => {
+            if(confirm('¿Eliminar evento?')) {
+                events = events.filter(e => e.id !== id);
+                saveData();
+                modal.style.display = 'none';
+            }
+        };
+    };
+
+    // Inicialización
     document.addEventListener('DOMContentLoaded', () => {
         loadData();
-        render();
-        setupSpotifyPlayer();
+        renderEvents();
+        renderCalendar();
         setInterval(updateClocks, 1000);
         updateClocks();
 
         const form = document.getElementById('event-form');
-        const modal = document.getElementById('details-modal');
-
-        document.getElementById('btn-toggle-form').onclick = () => {
-            document.getElementById('form-title').textContent = "Nuevo Evento";
-            document.getElementById('edit-id').value = "";
-            document.getElementById('in-title').value = "";
-            document.getElementById('in-date').value = "";
-            document.getElementById('in-link').value = "";
-            form.style.display = 'block';
+        const btnToggle = document.getElementById('btn-toggle-form');
+        
+        btnToggle.onclick = () => {
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
         };
 
         document.getElementById('btn-cancel').onclick = () => form.style.display = 'none';
@@ -253,87 +139,28 @@
             const title = document.getElementById('in-title').value;
             const date = document.getElementById('in-date').value;
             const link = document.getElementById('in-link').value;
-            const editId = document.getElementById('edit-id').value;
 
-            if(!title || !date) return; // Validación básica silenciosa
+            if (!title || !date) return alert('Título y Fecha obligatorios');
 
-            if (editId) {
-                const idx = events.findIndex(e => e.id == editId);
-                events[idx] = { ...events[idx], title, date, link };
-            } else {
-                events.push({ id: Date.now(), title, date, link });
-            }
+            const newEvent = {
+                id: Date.now().toString(),
+                title,
+                date,
+                link
+            };
 
-            events.sort((a,b) => new Date(a.date) - new Date(b.date));
+            events.push(newEvent);
             saveData();
-            render();
             form.style.display = 'none';
+            // Limpiar
+            document.getElementById('in-title').value = '';
+            document.getElementById('in-date').value = '';
+            document.getElementById('in-link').value = '';
         };
 
-        document.getElementById('events-list').addEventListener('click', (e) => {
-            const id = e.target.getAttribute('data-id');
-            if(!id) return;
-
-            if(e.target.classList.contains('delete-btn')) {
-                events = events.filter(ev => ev.id != id);
-                saveData();
-                render();
-            }
-
-            if(e.target.classList.contains('edit-btn')) {
-                const ev = events.find(ev => ev.id == id);
-                document.getElementById('form-title').textContent = "Editar Evento";
-                document.getElementById('edit-id').value = ev.id;
-                document.getElementById('in-title').value = ev.title;
-                document.getElementById('in-date').value = ev.date;
-                document.getElementById('in-link').value = ev.link || '';
-                form.style.display = 'block';
-            }
-
-            if(e.target.classList.contains('details-trigger')) {
-                const ev = events.find(ev => ev.id == id);
-                const d = new Date(ev.date);
-                const fullDate = d.toLocaleDateString('es-PE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                
-                document.getElementById('modal-body').innerHTML = `
-                    <h2>${ev.title}</h2>
-                    <div class="detail-item"><label>Fecha Completa</label><p>${fullDate}</p></div>
-                    <div class="detail-item"><label>Horario PE</label><p>${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'America/Lima' })}</p></div>
-                    <div class="detail-item"><label>Horario KR</label><p>${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Seoul' })}</p></div>
-                    
-                    ${ev.link ? `
-                    <div class="modal-footer-actions">
-                        <a href="${ev.link}" class="modal-link-btn" target="_blank">IR AL EVENTO</a>
-                        <button id="btn-copy-modal" data-link="${ev.link}" class="modal-copy-btn" title="Copiar URL">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                            </svg>
-                        </button>
-                    </div>` : ''}
-                `;
-                modal.style.display = 'flex';
-
-                const copyBtn = document.getElementById('btn-copy-modal');
-                if (copyBtn) {
-                    copyBtn.onclick = () => {
-                        const url = copyBtn.getAttribute('data-link');
-                        const temp = document.createElement('input');
-                        temp.value = url;
-                        document.body.appendChild(temp);
-                        temp.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(temp);
-                        
-                        const originalSVG = copyBtn.innerHTML;
-                        copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                        setTimeout(() => copyBtn.innerHTML = originalSVG, 2000);
-                    };
-                }
-            }
-        });
-
-        document.getElementById('modal-close').onclick = () => modal.style.display = 'none';
-        window.onclick = (e) => { if(e.target == modal) modal.style.display = 'none'; };
+        document.getElementById('modal-close').onclick = () => {
+            document.getElementById('details-modal').style.display = 'none';
+        };
     });
+
 })();
