@@ -29,273 +29,498 @@
             overflow-x: hidden;
         }
 
-        /* Ajuste de contenedores para la posición de los bloques */
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-direction: column; /* Apilado en móvil */
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
             gap: 20px;
-            border-bottom: 1px solid var(--bts-gray-border);
+            border-bottom: 2px solid var(--bts-black);
         }
 
-        @media (min-width: 600px) {
-            header {
-                flex-direction: row; /* Uno al lado del otro en desktop */
-                justify-content: space-between;
-                align-items: flex-start;
-            }
-        }
-
-        /* Bloque 1: Schedule & Spotify */
-        .block-1 {
+        .header-left, .header-right {
             flex: 1;
+            min-width: 250px;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        /* Bloque 2: Relojes & Calendario */
-        .block-2 {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 350px;
-        }
+        .header-right { align-items: flex-end; }
 
-        /* Estilos originales del ZIP */
-        .brand-header h1 {
-            font-size: 2.8rem;
+        .title-group h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
             font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 0.8;
             text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 0.9;
         }
 
-        .brand-header p {
-            font-size: 0.7rem;
-            color: var(--bts-red);
-            font-weight: 800;
+        .title-group p {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        .album-container {
-            width: 100%;
-            max-width: 300px;
-            margin-top: 5px;
-        }
-
-        .album-art {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background-color: #eee;
-            cursor: pointer;
-            border-radius: 4px;
-            overflow: hidden;
-            display: block;
-        }
-
-        .album-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .spotify-controls {
-            display: flex;
-            gap: 10px;
+            color: var(--bts-text-muted);
+            font-weight: 600;
             margin-top: 10px;
         }
 
-        .spotify-btn {
-            flex: 1;
-            padding: 8px;
-            font-size: 0.65rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 1px solid var(--bts-black);
-            background: white;
+        .album-container img {
+            max-width: 100%;
+            width: 240px;
+            height: auto;
+            border: 1px solid var(--bts-gray-border);
+            display: block;
             cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            color: black;
         }
 
-        .clocks-container {
+        .clocks-wrapper {
             display: flex;
-            gap: 10px;
+            gap: 25px;
+            margin-bottom: 10px;
         }
 
         .clock-item {
-            flex: 1;
-            background: var(--bts-gray-light);
-            padding: 12px;
-            border-radius: 4px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
         }
 
-        .clock-label {
-            font-size: 0.6rem;
-            font-weight: bold;
-            color: var(--bts-text-muted);
+        .label-box {
+            background-color: var(--bts-red);
+            width: 100%;
+            text-align: center;
+            padding: 3px 0;
+            margin-bottom: 4px;
+        }
+
+        .label-box span {
+            color: white;
+            font-weight: 900;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            margin-bottom: 2px;
         }
 
         .clock-time {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 800;
+            font-variant-numeric: tabular-nums;
         }
 
-        .mini-calendar {
-            border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
-            padding: 15px;
+        /* --- ESTILOS DEL CALENDARIO --- */
+        .calendar-container {
+            width: 220px;
+            background: var(--bts-white);
+            border: 1px solid var(--bts-black);
+            padding: 10px;
+            font-size: 0.7rem;
         }
 
-        .calendar-title {
-            font-size: 0.8rem;
-            font-weight: 900;
+        .calendar-header {
             text-align: center;
-            margin-bottom: 12px;
+            font-weight: 900;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--bts-gray-border);
+            padding-bottom: 5px;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+            gap: 2px;
             text-align: center;
         }
 
-        .day-header {
-            font-size: 0.6rem;
-            font-weight: bold;
+        .calendar-day-head {
+            font-weight: 900;
             color: var(--bts-text-muted);
+            margin-bottom: 5px;
         }
 
-        .day-cell {
-            font-size: 0.75rem;
-            padding: 6px 0;
+        .calendar-day {
+            padding: 4px 0;
+            font-weight: 600;
         }
 
-        .day-cell.today {
-            background: var(--bts-black);
+        .has-event {
+            background-color: var(--bts-red);
             color: white;
             border-radius: 2px;
+            font-weight: 900;
         }
 
-        /* Main Content original */
-        .main-content { padding: 20px; }
+        /* --- TABLA Y EVENTOS --- */
+        .main-content {
+            padding: 0 var(--header-padding) 40px;
+            flex: 1;
+        }
+
+        .table-header, .event-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 160px 80px;
+            align-items: center;
+            gap: 15px;
+        }
 
         .table-header {
-            display: grid;
-            grid-template-columns: 80px 1fr 100px 60px;
-            padding: 10px 0;
-            border-bottom: 2px solid var(--bts-black);
-            font-size: 0.7rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .event-item {
-            display: grid;
-            grid-template-columns: 80px 1fr 100px 60px;
             padding: 15px 0;
-            border-bottom: 1px solid var(--bts-gray-border);
-            font-size: 0.85rem;
-            align-items: center;
-        }
-
-        #event-form {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: white;
-            padding: 20px;
-            border: 1px solid black;
-            display: none;
-            z-index: 100;
-        }
-
-        .add-btn {
-            background: black;
-            color: white;
-            padding: 12px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
+            border-bottom: 2px solid var(--bts-black);
+            font-weight: 900;
             text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
         }
 
+        .event-row {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--bts-gray-border);
+        }
+
+        .event-row.past-event {
+            opacity: 0.5;
+            background: #fafafa;
+        }
+
+        .past-tag {
+            font-size: 0.55rem;
+            background: #999;
+            color: white;
+            padding: 2px 4px;
+            font-weight: 900;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .date-col { font-size: 1.2rem; font-weight: 900; text-align: center; }
+        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; }
+
+        .info-col .event-name { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; }
+        .info-col button.details-trigger {
+            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); 
+            border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
+        }
+
+        .sync-col { display: flex; flex-direction: column; gap: 6px; }
+        .time-pill {
+            background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
+            font-weight: 700; font-size: 0.75rem; border-radius: 2px;
+        }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; }
+
+        .action-col { display: flex; gap: 10px; justify-content: flex-end; }
+        .action-btn { background: none; border: none; font-size: 1rem; color: #ccc; cursor: pointer; padding: 5px; }
+        .edit-btn:hover { color: var(--bts-black); }
+        .delete-btn:hover { color: var(--bts-red); }
+
+        /* MODALES */
         .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
+        .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
+        .modal-body h2 { font-size: 1.8rem; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; }
+        
+        .detail-item { margin-bottom: 15px; }
+        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); }
+        .detail-item p { font-size: 1rem; font-weight: 700; }
+
+        /* Contenedor de botones en el modal */
+        .modal-footer-actions {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 20px; 
+            align-items: stretch; /* Esto asegura que el botón de copiar tenga la misma altura que el link */
+        }
+
+        .modal-link-btn { 
+            flex: 1;
+            padding: 15px; 
+            background: black; 
+            color: white; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
         }
 
-        .modal-content {
-            background: white;
-            padding: 25px;
-            width: 90%;
-            max-width: 400px;
+        .modal-copy-btn {
+            width: 50px;
+            background: black;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-copy-btn:hover {
+            background: var(--bts-red);
+        }
+
+        #event-form { display: none; background: var(--bts-gray-light); padding: 20px; border: 2px solid var(--bts-black); margin-top: 10px; }
+        .form-grid { display: flex; flex-direction: column; gap: 12px; }
+        .form-grid input { padding: 12px; border: 1px solid #ccc; width: 100%; }
+        .save-btn { background: var(--bts-black); color: white; padding: 15px; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
+        .footer-controls { padding: 20px 0; display: flex; justify-content: center; }
+        .add-btn { background: var(--bts-black); color: white; border: none; padding: 14px 30px; font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%; max-width: 300px; }
+
+        @media (max-width: 768px) {
+            :root {
+                --header-padding: 14px;
+            }
+
+            header {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(140px, 42%);
+                align-items: start;
+                gap: 14px;
+            }
+
+            .header-left, .header-right {
+                min-width: 0;
+                gap: 12px;
+            }
+
+            .header-right {
+                align-items: stretch;
+            }
+
+            .title-group h1 {
+                font-size: clamp(2.2rem, 8vw, 3.2rem);
+                line-height: 0.95;
+            }
+
+            .title-group p {
+                font-size: 0.58rem;
+                letter-spacing: 2px;
+                margin-top: 6px;
+            }
+
+            .album-container img {
+                width: 100%;
+                max-width: 260px;
+            }
+
+            .clocks-wrapper {
+                justify-content: space-between;
+                gap: 10px;
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            .clock-item {
+                width: calc(50% - 5px);
+            }
+
+            .clock-time {
+                font-size: clamp(1rem, 3.6vw, 1.35rem);
+            }
+
+            .calendar-container {
+                width: 100%;
+                max-width: 250px;
+                margin-left: auto;
+                font-size: 0.72rem;
+            }
+
+            .main-content {
+                padding: 0 var(--header-padding) 28px;
+            }
+
+            .table-header, .event-row {
+                grid-template-columns: 72px minmax(0, 1fr) 132px 58px;
+                gap: 10px;
+            }
+
+            .table-header {
+                font-size: 0.68rem;
+            }
+
+            .event-row {
+                padding: 16px 0;
+            }
+
+            .date-col {
+                font-size: 1rem;
+            }
+
+            .date-col span {
+                font-size: 0.62rem;
+            }
+
+            .info-col .event-name {
+                font-size: 0.92rem;
+                line-height: 1.15;
+                word-break: break-word;
+            }
+
+            .sync-col {
+                gap: 4px;
+            }
+
+            .time-pill {
+                padding: 4px 6px;
+                font-size: 0.68rem;
+            }
+
+            .action-col {
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            header {
+                grid-template-columns: minmax(0, 1fr) 150px;
+                gap: 12px;
+            }
+
+            .title-group h1 {
+                font-size: clamp(1.9rem, 9vw, 2.8rem);
+            }
+
+            .title-group p {
+                font-size: 0.52rem;
+                letter-spacing: 1.8px;
+            }
+
+            .clocks-wrapper {
+                gap: 8px;
+            }
+
+            .clock-item {
+                width: calc(50% - 4px);
+            }
+
+            .label-box span {
+                font-size: 0.62rem;
+            }
+
+            .clock-time {
+                font-size: 0.95rem;
+            }
+
+            .calendar-container {
+                padding: 8px;
+                font-size: 0.64rem;
+            }
+
+            .calendar-day {
+                padding: 3px 0;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .event-row {
+                grid-template-columns: 54px minmax(0, 1fr) 34px;
+                grid-template-areas:
+                    "date info action"
+                    "date sync action";
+                gap: 8px;
+                align-items: start;
+            }
+
+            .date-col {
+                grid-area: date;
+                font-size: 0.95rem;
+            }
+
+            .info-col {
+                grid-area: info;
+            }
+
+            .info-col .event-name {
+                font-size: 0.9rem;
+            }
+
+            .sync-col {
+                grid-area: sync;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .time-pill {
+                flex: 1 1 110px;
+                min-width: 0;
+            }
+
+            .action-col {
+                grid-area: action;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .action-btn {
+                font-size: 0.9rem;
+                padding: 2px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            header {
+                grid-template-columns: 1fr;
+            }
+
+            .header-right {
+                align-items: stretch;
+            }
+
+            .calendar-container {
+                max-width: none;
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Bloque 1: Schedule e Imagen/Reproductor -->
-        <div class="block-1">
-            <div class="brand-header">
+        <div class="header-left">
+            <div class="title-group">
                 <h1>Schedule</h1>
-                <p>BTS OFFICIAL EVENT TRACKER</p>
+                <p>BTS Official Event Tracker</p>
             </div>
-
             <div class="album-container">
-                <div id="spotify-player-root">
-                    <div class="album-art" id="album-btn">
-                        <img src="arirang album.png" alt="Arirang Album" onerror="this.src='https://i.scdn.co/image/ab67616d0000b2737609756184d09355442f4c28'">
-                    </div>
-                </div>
-                
-                <div class="spotify-controls">
-                    <button class="spotify-btn" id="btn-change-playlist">Cambiar Playlist</button>
-                    <a href="#" class="spotify-btn" id="btn-open-app">Abrir App</a>
-                </div>
+                <img src="arirang album.png" alt="Arirang Album">
             </div>
         </div>
 
-        <!-- Bloque 2: Relojes y Calendario -->
-        <div class="block-2">
-            <div class="clocks-container">
+        <div class="header-right">
+            <div class="clocks-wrapper">
                 <div class="clock-item">
-                    <div class="clock-label">Perú</div>
-                    <div id="pe-time" class="clock-time">00:00:00</div>
+                    <div class="label-box"><span>Peru</span></div>
+                    <div id="pe-time" class="clock-time">--:--:--</div>
                 </div>
                 <div class="clock-item">
-                    <div class="clock-label">Korea</div>
-                    <div id="kr-time" class="clock-time">00:00:00</div>
+                    <div class="label-box"><span>Korea</span></div>
+                    <div id="kr-time" class="clock-time">--:--:--</div>
                 </div>
             </div>
-
-            <div class="mini-calendar">
-                <div class="calendar-title" id="cal-month-title">MARZO 2024</div>
+            
+            <div id="calendar-widget" class="calendar-container">
+                <div id="cal-month" class="calendar-header">Cargando...</div>
                 <div class="calendar-grid">
-                    <div class="day-header">L</div><div class="day-header">M</div><div class="day-header">M</div>
-                    <div class="day-header">J</div><div class="day-header">V</div><div class="day-header">S</div><div class="day-header">D</div>
+                    <div class="calendar-day-head">D</div>
+                    <div class="calendar-day-head">L</div>
+                    <div class="calendar-day-head">M</div>
+                    <div class="calendar-day-head">X</div>
+                    <div class="calendar-day-head">J</div>
+                    <div class="calendar-day-head">V</div>
+                    <div class="calendar-day-head">S</div>
                 </div>
-                <div id="cal-days" class="calendar-grid">
-                    <!-- Los días se generan mediante script.js -->
-                </div>
+                <div id="cal-days" class="calendar-grid"></div>
             </div>
         </div>
     </header>
@@ -305,31 +530,32 @@
             <div>Fecha</div>
             <div>Evento</div>
             <div>Horario</div>
-            <div style="text-align: right;">Ver</div>
+            <div style="text-align: right;">Acción</div>
         </div>
 
-        <div id="events-list">
-            <!-- Los eventos se generan mediante script.js -->
-        </div>
+        <div id="events-list"></div>
 
-        <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+        <div class="footer-controls">
+            <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+        </div>
 
         <div id="event-form">
-            <input type="hidden" id="edit-id">
-            <input type="text" id="in-title" placeholder="Nombre del Evento" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
-            <input type="datetime-local" id="in-date" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
-            <input type="url" id="in-link" placeholder="Link del Evento (opcional)" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
-            <button id="btn-save" style="width:100%; background:black; color:white; padding:12px; border:none; font-weight:bold; cursor:pointer;">GUARDAR</button>
-            <button id="btn-cancel" style="width:100%; background:none; border:none; padding:10px; cursor:pointer;">Cancelar</button>
+            <div class="form-grid">
+                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
+                <input type="hidden" id="edit-id">
+                <input type="text" id="in-title" placeholder="Nombre del Evento">
+                <input type="datetime-local" id="in-date">
+                <input type="url" id="in-link" placeholder="Link del Evento (opcional)">
+                <button id="btn-save" class="save-btn">Guardar Evento</button>
+                <button id="btn-cancel" class="cancel-btn">Cancelar</button>
+            </div>
         </div>
     </main>
 
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <h2 id="modal-title" style="margin-bottom:10px; text-transform: uppercase;"></h2>
-            <p id="modal-date" style="color:var(--bts-text-muted); margin-bottom:20px;"></p>
-            <div id="modal-actions"></div>
-            <button id="modal-close" style="margin-top:20px; width:100%; padding:10px; background:#f0f0f0; border:none; font-weight:bold; cursor:pointer;">Cerrar</button>
+            <span id="modal-close" class="modal-close">×</span>
+            <div class="modal-body" id="modal-body"></div>
         </div>
     </div>
 
