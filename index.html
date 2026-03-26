@@ -11,6 +11,9 @@
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <title>ARMY Schedule Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&display=swap" rel="stylesheet">
     <style>
         :root {
             --bts-black: #000000;
@@ -38,6 +41,14 @@
             overflow-x: hidden;
         }
 
+
+        .ultra-bold {
+            font-family: 'Archivo Black', 'Arial Black', Arial, Helvetica, sans-serif;
+            font-weight: 900;
+            -webkit-text-stroke: 0.18px transparent;
+            text-shadow: 0.28px 0 currentColor, -0.28px 0 currentColor;
+        }
+
         header {
             padding: var(--header-padding);
             display: flex;
@@ -59,16 +70,18 @@
         .header-right { align-items: flex-end; }
 
         .title-group h1 {
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Anton', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 900;
+            font-weight: 400;
+            -webkit-text-stroke: 0.2px transparent;
+            text-shadow: 0.35px 0 currentColor, -0.35px 0 currentColor;
             text-transform: uppercase;
             letter-spacing: -1.4px;
             line-height: 0.88;
         }
 
         .title-group p {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', 'Arial Black', Arial, Helvetica, sans-serif;
             font-size: 0.65rem;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -162,7 +175,7 @@
         }
 
         .label-box span {
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', 'Arial Black', Arial, Helvetica, sans-serif;
             color: white;
             font-weight: 900;
             font-size: 0.7rem;
@@ -170,7 +183,7 @@
         }
 
         .clock-time {
-            font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', 'Arial Black', Arial, Helvetica, sans-serif;
             font-size: 1.4rem;
             font-weight: 900;
             font-variant-numeric: tabular-nums;
@@ -187,7 +200,7 @@
 
         .calendar-header {
             text-align: center;
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 8px;
@@ -203,7 +216,7 @@
         }
 
         .calendar-day-head {
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             color: var(--bts-text-muted);
             margin-bottom: 5px;
@@ -237,11 +250,13 @@
         .table-header {
             padding: 15px 0;
             border-bottom: 2px solid var(--bts-black);
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
             text-transform: uppercase;
             font-size: 0.7rem;
             letter-spacing: 1px;
+            -webkit-text-stroke: 0.14px transparent;
+            text-shadow: 0.22px 0 currentColor, -0.22px 0 currentColor;
         }
 
         .event-row {
@@ -264,13 +279,15 @@
             vertical-align: middle;
         }
 
-        .date-col { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; letter-spacing: 0.2px; }
-        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; font-weight: 900; letter-spacing: 0.6px; }
+        .date-col { font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.2rem; font-weight: 900; text-align: center; letter-spacing: 0.2px; -webkit-text-stroke: 0.15px transparent; text-shadow: 0.22px 0 currentColor, -0.22px 0 currentColor; }
+        .date-col span { display: block; font-size: 0.65rem; color: var(--bts-text-muted); text-transform: uppercase; font-weight: 900; letter-spacing: 0.6px; -webkit-text-stroke: 0.1px transparent; text-shadow: 0.15px 0 currentColor, -0.15px 0 currentColor; }
 
-        .info-col .event-name { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; line-height: 1.05; letter-spacing: 0.1px; }
+        .info-col .event-name { font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px; line-height: 1.05; letter-spacing: 0.1px; -webkit-text-stroke: 0.16px transparent; text-shadow: 0.24px 0 currentColor, -0.24px 0 currentColor; }
         .info-col button.details-trigger {
-            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; 
+            background: none; border: none; font-size: 0.65rem; font-weight: 900; color: var(--bts-red); font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; 
             border-bottom: 1px solid var(--bts-red); cursor: pointer; text-transform: uppercase;
+            -webkit-text-stroke: 0.1px transparent;
+            text-shadow: 0.14px 0 currentColor, -0.14px 0 currentColor;
         }
 
         .sync-col { display: flex; flex-direction: column; gap: 6px; }
@@ -278,7 +295,7 @@
             background: var(--bts-gray-light); padding: 4px 8px; display: flex; justify-content: space-between;
             font-weight: 900; font-size: 0.75rem; border-radius: 2px;
         }
-        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.4px; }
+        .time-pill .tag { color: var(--bts-red); font-size: 0.6rem; font-weight: 900; font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.4px; -webkit-text-stroke: 0.1px transparent; text-shadow: 0.14px 0 currentColor, -0.14px 0 currentColor; }
         .time-pill span:last-child { font-weight: 900; }
 
         .action-col { display: flex; gap: 10px; justify-content: flex-end; }
@@ -293,11 +310,11 @@
         }
         .modal-content { background: white; width: 100%; max-width: 400px; padding: 30px; position: relative; border: 3px solid black; }
         .modal-close { position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; font-weight: 900; }
-        .modal-body h2 { font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; line-height: 1; }
+        .modal-body h2 { font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 15px; border-bottom: 2px solid var(--bts-red); padding-bottom: 10px; line-height: 1; -webkit-text-stroke: 0.16px transparent; text-shadow: 0.24px 0 currentColor, -0.24px 0 currentColor; }
         
         .detail-item { margin-bottom: 15px; }
-        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.5px; }
-        .detail-item p { font-size: 1rem; font-weight: 900; font-family: 'Arial Black', Arial, Helvetica, sans-serif; }
+        .detail-item label { display: block; font-size: 0.7rem; text-transform: uppercase; font-weight: 900; color: var(--bts-text-muted); font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif; letter-spacing: 0.5px; -webkit-text-stroke: 0.1px transparent; text-shadow: 0.14px 0 currentColor, -0.14px 0 currentColor; }
+        .detail-item p { font-size: 1rem; font-weight: 900; font-family: 'Archivo Black', 'Arial Black', Arial, Helvetica, sans-serif; -webkit-text-stroke: 0.12px transparent; text-shadow: 0.18px 0 currentColor, -0.18px 0 currentColor; }
 
         /* Contenedor de botones en el modal */
         .modal-footer-actions {
@@ -344,8 +361,10 @@
         .cancel-btn { background: #eee; color: #666; padding: 10px; border: none; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; }
 
         .table-header > div {
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
+            -webkit-text-stroke: 0.14px transparent;
+            text-shadow: 0.22px 0 currentColor, -0.22px 0 currentColor;
         }
 
         .label-box span,
@@ -357,7 +376,7 @@
         .modal-link-btn,
         .save-btn,
         .add-btn {
-            font-family: Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
+            font-family: 'Archivo Black', Impact, Haettenschweiler, 'Arial Black', Arial, Helvetica, sans-serif;
             font-weight: 900;
         }
 
