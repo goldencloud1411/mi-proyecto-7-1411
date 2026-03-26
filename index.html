@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/png" href="icon.png">
     <title>ARMY Schedule Pro</title>
     <style>
@@ -32,10 +32,10 @@
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: row;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
+            gap: 20px;
             border-bottom: 1px solid var(--bts-gray-border);
         }
 
@@ -43,8 +43,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            flex: 1;
-            min-width: 200px;
+            flex: 1.2;
         }
 
         .header-top {
@@ -54,31 +53,31 @@
         }
 
         .header-top img {
-            height: 40px;
+            height: 35px;
+            width: auto;
         }
 
         .album-container {
             cursor: pointer;
             transition: transform 0.2s;
-        }
-
-        .album-container:hover {
-            transform: scale(1.05);
+            flex-shrink: 0;
         }
 
         .album-container img {
-            height: 50px;
+            height: 45px;
+            width: 45px;
             border-radius: 4px;
+            object-fit: cover;
         }
 
         .clocks-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             background: var(--bts-gray-light);
-            padding: 15px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--bts-black);
             border: 1px solid var(--bts-gray-border);
         }
@@ -87,22 +86,24 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .clock-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--bts-text-muted);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .header-right {
             flex: 1;
-            min-width: 250px;
+            min-width: 160px;
         }
 
         .calendar-wrapper {
             background: var(--bts-white);
+            width: 100%;
         }
 
         .calendar-grid {
@@ -114,17 +115,17 @@
 
         .calendar-day-head {
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--bts-text-muted);
-            padding-bottom: 5px;
+            padding-bottom: 4px;
         }
 
         .cal-day {
-            padding: 8px 0;
-            font-size: 0.9rem;
+            padding: 6px 0;
+            font-size: 0.8rem;
             position: relative;
             background: var(--bts-gray-light);
-            border-radius: 4px;
+            border-radius: 3px;
         }
 
         .cal-day.today {
@@ -134,13 +135,13 @@
         }
 
         .cal-day .dot {
-            height: 4px;
-            width: 4px;
+            height: 3px;
+            width: 3px;
             background-color: var(--bts-red);
             border-radius: 50%;
             display: inline-block;
             position: absolute;
-            bottom: 3px;
+            bottom: 2px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -152,51 +153,45 @@
 
         .table-header {
             display: grid;
-            grid-template-columns: 90px 1fr 80px 100px;
+            grid-template-columns: 80px 1fr 80px 40px;
             gap: 10px;
             font-weight: bold;
             color: var(--bts-text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--bts-black);
             text-transform: uppercase;
         }
 
         #events-list {
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
         .event-row {
             display: grid;
-            grid-template-columns: 90px 1fr 80px 100px;
+            grid-template-columns: 80px 1fr 80px 40px;
             gap: 10px;
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid var(--bts-gray-border);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .event-actions {
             display: flex;
-            gap: 5px;
             justify-content: flex-end;
         }
 
         .action-btn {
             background: transparent;
-            border: 1px solid var(--bts-gray-border);
+            border: none;
             cursor: pointer;
-            padding: 5px 8px;
-            border-radius: 4px;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
+            padding: 5px;
+            font-size: 1.1rem;
         }
 
-        .action-btn:hover { background: var(--bts-gray-light); }
-
         .footer-controls {
-            padding: 20px;
+            padding: 15px 20px;
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -207,42 +202,45 @@
 
         .add-btn {
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background: var(--bts-black);
             color: var(--bts-white);
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         #event-form {
             display: none;
-            background: var(--bts-gray-light);
+            background: var(--bts-white);
             padding: 20px;
-            border-radius: 6px;
-            margin-top: 20px;
-            border: 1px solid var(--bts-gray-border);
+            border-top: 2px solid var(--bts-black);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
             position: fixed;
-            bottom: 85px;
-            left: 20px;
-            right: 20px;
+            bottom: 0;
+            left: 0;
+            right: 0;
             z-index: 20;
         }
 
         .form-grid {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         input {
             padding: 12px;
             border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
-            font-size: 0.95rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 100%;
         }
 
         .save-btn {
@@ -250,17 +248,17 @@
             color: var(--bts-white);
             padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .cancel-btn {
-            background: var(--bts-white);
+            background: var(--bts-gray-light);
             color: var(--bts-black);
-            padding: 10px;
-            border: 1px solid var(--bts-gray-border);
-            border-radius: 4px;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -273,13 +271,14 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
 
         .modal-content {
             background: var(--bts-white);
-            padding: 30px;
-            border-radius: 6px;
-            width: 90%;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
             max-width: 400px;
             position: relative;
         }
@@ -287,51 +286,26 @@
         .close-modal {
             position: absolute;
             top: 10px; right: 15px;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
             border: none; background: none;
         }
 
-        /* AJUSTES PARA CELULAR (MÓVIL) */
-        @media (max-width: 600px) {
+        /* RESPONSIVE AJUSTES */
+        @media (max-width: 480px) {
             header {
                 padding: 15px;
-                flex-direction: column;
-                gap: 20px;
+                gap: 10px;
             }
+            .header-left { flex: 1.5; }
+            .header-right { flex: 1; min-width: 120px; }
+            
+            .clocks-container { font-size: 0.9rem; padding: 8px; }
+            .cal-day { font-size: 0.7rem; padding: 4px 0; }
+            .calendar-day-head { font-size: 0.6rem; }
 
-            .header-left, .header-right {
-                width: 100%;
-                min-width: unset;
-            }
-
-            .header-top {
-                justify-content: center;
-            }
-
-            .clocks-container {
-                padding: 10px;
-                font-size: 1rem;
-            }
-
-            /* Tabla compacta para móvil */
-            .table-header {
-                display: none;
-            }
-
-            .event-row {
-                grid-template-columns: 60px 1fr 65px;
-                gap: 5px;
-                font-size: 0.85rem;
-            }
-
-            .event-actions {
-                grid-column: 1 / -1;
-                justify-content: flex-start;
-                margin-top: 5px;
-                border-top: 1px solid #f0f0f0;
-                padding-top: 5px;
-            }
+            .table-header { grid-template-columns: 60px 1fr 65px 30px; }
+            .event-row { grid-template-columns: 60px 1fr 65px 30px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -340,20 +314,20 @@
     <header>
         <div class="header-left">
             <div class="header-top">
-                <img src="arirang logo.png" alt="Arirang Logo" onerror="this.style.display='none'">
-                <div class="album-container">
-                    <img src="arirang album.png" alt="Arirang Album" onerror="this.style.display='none'">
+                <img src="arirang logo.png" alt="Logo" onerror="this.style.display='none'">
+                <div class="album-container" title="Cambiar Spotify">
+                    <img src="arirang album.png" alt="Album" onerror="this.style.display='none'">
                 </div>
             </div>
 
             <div class="clocks-container">
                 <div class="clock-item">
-                    <span class="clock-label">Perú 🇵🇪</span>
-                    <span id="pe-time">--:--:--</span>
+                    <span class="clock-label">PE 🇵🇪</span>
+                    <span id="pe-time">--:--</span>
                 </div>
                 <div class="clock-item">
-                    <span class="clock-label">Corea 🇰🇷</span>
-                    <span id="kr-time">--:--:--</span>
+                    <span class="clock-label">KR 🇰🇷</span>
+                    <span id="kr-time">--:--</span>
                 </div>
             </div>
         </div>
@@ -361,13 +335,7 @@
         <div class="header-right">
             <div class="calendar-wrapper">
                 <div class="calendar-grid">
-                    <div class="calendar-day-head">D</div>
-                    <div class="calendar-day-head">L</div>
-                    <div class="calendar-day-head">M</div>
-                    <div class="calendar-day-head">M</div>
-                    <div class="calendar-day-head">J</div>
-                    <div class="calendar-day-head">V</div>
-                    <div class="calendar-day-head">S</div>
+                    <div class="calendar-day-head">D</div><div class="calendar-day-head">L</div><div class="calendar-day-head">M</div><div class="calendar-day-head">M</div><div class="calendar-day-head">J</div><div class="calendar-day-head">V</div><div class="calendar-day-head">S</div>
                 </div>
                 <div id="cal-days" class="calendar-grid"></div>
             </div>
@@ -378,27 +346,27 @@
         <div class="table-header">
             <div>Fecha</div>
             <div>Evento</div>
-            <div>Horario</div>
-            <div style="text-align: right;">Acción</div>
+            <div>Hora</div>
+            <div style="text-align: right;"></div>
         </div>
 
         <div id="events-list"></div>
-
-        <div id="event-form">
-            <div class="form-grid">
-                <h3 id="form-title" style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 5px;">Nuevo Evento</h3>
-                <input type="hidden" id="edit-id">
-                <input type="text" id="in-title" placeholder="Nombre del Evento">
-                <input type="datetime-local" id="in-date">
-                <input type="url" id="in-link" placeholder="Link del Evento (opcional)">
-                <button id="btn-save" class="save-btn">Guardar Evento</button>
-                <button id="btn-cancel" class="cancel-btn">Cancelar</button>
-            </div>
-        </div>
     </main>
 
     <div class="footer-controls">
-        <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
+        <button id="btn-toggle-form" class="add-btn">+ NUEVO EVENTO</button>
+    </div>
+
+    <div id="event-form">
+        <div class="form-grid">
+            <h3 id="form-title" style="font-size: 0.9rem; text-transform: uppercase;">Evento</h3>
+            <input type="hidden" id="edit-id">
+            <input type="text" id="in-title" placeholder="Nombre del Evento">
+            <input type="datetime-local" id="in-date">
+            <input type="url" id="in-link" placeholder="Link (opcional)">
+            <button id="btn-save" class="save-btn">GUARDAR</button>
+            <button id="btn-cancel" class="cancel-btn">CANCELAR</button>
+        </div>
     </div>
 
     <div id="details-modal" class="modal">
@@ -410,27 +378,24 @@
 
     <script>
         (function() {
-            const STORAGE_KEY = 'bts_pro_events';
-            const SPOTIFY_URL_KEY = 'bts_pro_spotify';
+            const STORAGE_KEY = 'bts_pro_events_v2';
+            const SPOTIFY_URL_KEY = 'bts_pro_spotify_v2';
             let events = [];
 
             const loadData = () => {
-                try {
-                    const data = localStorage.getItem(STORAGE_KEY);
-                    events = data ? JSON.parse(data) : [];
-                } catch (e) { events = []; }
+                const data = localStorage.getItem(STORAGE_KEY);
+                events = data ? JSON.parse(data) : [];
             };
 
             const saveData = () => {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-                renderEvents();
-                renderCalendar();
+                renderAll();
             };
 
             const updateClocks = () => {
                 const now = new Date();
-                const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Lima' });
-                const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
+                const pe = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Lima' });
+                const kr = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Seoul' });
                 document.getElementById('pe-time').textContent = pe;
                 document.getElementById('kr-time').textContent = kr;
             };
@@ -463,23 +428,26 @@
 
                 events.forEach((ev, idx) => {
                     const d = new Date(ev.date);
-                    const dayStr = d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
-                    const timeStr = d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
+                    const day = d.toLocaleDateString('es-PE', { day: '2-digit', month: '2-digit' });
+                    const time = d.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false });
                     
                     const row = document.createElement('div');
                     row.className = 'event-row';
                     row.innerHTML = `
-                        <div>${dayStr}</div>
-                        <div style="font-weight:500">${ev.title}</div>
-                        <div>${timeStr} Hrs</div>
+                        <div>${day}</div>
+                        <div style="font-weight:500; cursor:pointer;" onclick="viewEvent(${idx})">${ev.title}</div>
+                        <div>${time}</div>
                         <div class="event-actions">
-                            <button class="action-btn" onclick="viewEvent(${idx})">👁️</button>
                             <button class="action-btn" onclick="editEvent(${idx})">✏️</button>
-                            <button class="action-btn" onclick="deleteEvent(${idx})">🗑️</button>
                         </div>
                     `;
                     list.appendChild(row);
                 });
+            };
+
+            const renderAll = () => {
+                renderEvents();
+                renderCalendar();
             };
 
             const setupSpotify = () => {
@@ -488,15 +456,13 @@
                 
                 if (spotifyUrl) {
                     const player = document.createElement('div');
-                    player.id = 'spotify-player-frame';
-                    player.style.marginTop = "10px";
-                    player.innerHTML = `<iframe style="border-radius:12px" src="${spotifyUrl}" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                    player.innerHTML = `<iframe style="border-radius:8px; margin-top:10px" src="${spotifyUrl}" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
                     document.querySelector('.header-left').appendChild(player);
                 }
 
                 container.onclick = () => {
                     const current = localStorage.getItem(SPOTIFY_URL_KEY) || "";
-                    const newUrl = prompt("Configura tu link de Spotify (Embed URL):", current);
+                    const newUrl = prompt("Pega el link de Embed de Spotify:", current);
                     if (newUrl !== null) {
                         localStorage.setItem(SPOTIFY_URL_KEY, newUrl);
                         location.reload();
@@ -506,29 +472,14 @@
 
             window.viewEvent = (idx) => {
                 const ev = events[idx];
-                const d = new Date(ev.date).toLocaleString('es-PE', { dateStyle: 'full', timeStyle: 'short' });
-                const modal = document.getElementById('details-modal');
+                const d = new Date(ev.date).toLocaleString('es-PE', { dateStyle: 'long', timeStyle: 'short' });
                 document.getElementById('modal-body').innerHTML = `
                     <h2 style="margin-bottom:10px">${ev.title}</h2>
-                    <p><strong>Fecha:</strong> ${d}</p>
-                    ${ev.link ? `<div style="margin-top:15px; display:flex; gap:10px;">
-                        <a href="${ev.link}" target="_blank" class="save-btn" style="flex:1; text-align:center; text-decoration:none;">Abrir Link</a>
-                        <button class="action-btn" onclick="copyToClipboard('${ev.link}', this)">📋</button>
-                    </div>` : ''}
+                    <p style="color:#666; margin-bottom:20px">${d}</p>
+                    ${ev.link ? `<a href="${ev.link}" target="_blank" class="save-btn" style="display:block; text-align:center; text-decoration:none">Abrir Enlace</a>` : ''}
+                    <button class="cancel-btn" style="width:100%; margin-top:10px" onclick="deleteEvent(${idx})">Eliminar Evento</button>
                 `;
-                modal.style.display = 'flex';
-            };
-
-            window.copyToClipboard = (text, btn) => {
-                const temp = document.createElement('input');
-                temp.value = text;
-                document.body.appendChild(temp);
-                temp.select();
-                document.execCommand('copy');
-                document.body.removeChild(temp);
-                const original = btn.innerText;
-                btn.innerText = '✅';
-                setTimeout(() => btn.innerText = original, 2000);
+                document.getElementById('details-modal').style.display = 'flex';
             };
 
             window.editEvent = (idx) => {
@@ -537,29 +488,23 @@
                 document.getElementById('in-title').value = ev.title;
                 document.getElementById('in-date').value = ev.date;
                 document.getElementById('in-link').value = ev.link || '';
-                document.getElementById('form-title').textContent = "Editar Evento";
                 document.getElementById('event-form').style.display = 'block';
             };
 
             window.deleteEvent = (idx) => {
-                if(confirm("¿Eliminar este evento?")) {
+                if(confirm("¿Eliminar?")) {
                     events.splice(idx, 1);
                     saveData();
+                    document.getElementById('details-modal').style.display = 'none';
                 }
             };
 
             document.getElementById('btn-toggle-form').onclick = () => {
-                const f = document.getElementById('event-form');
-                if (f.style.display === 'block') {
-                    f.style.display = 'none';
-                } else {
-                    document.getElementById('edit-id').value = '';
-                    document.getElementById('in-title').value = '';
-                    document.getElementById('in-date').value = '';
-                    document.getElementById('in-link').value = '';
-                    document.getElementById('form-title').textContent = "Nuevo Evento";
-                    f.style.display = 'block';
-                }
+                document.getElementById('edit-id').value = '';
+                document.getElementById('in-title').value = '';
+                document.getElementById('in-date').value = '';
+                document.getElementById('in-link').value = '';
+                document.getElementById('event-form').style.display = 'block';
             };
 
             document.getElementById('btn-cancel').onclick = () => document.getElementById('event-form').style.display = 'none';
@@ -569,7 +514,7 @@
                 const title = document.getElementById('in-title').value;
                 const date = document.getElementById('in-date').value;
                 const link = document.getElementById('in-link').value;
-                if (!title || !date) return alert("Completa los campos");
+                if (!title || !date) return;
                 
                 if (id !== "") events[id] = { title, date, link };
                 else events.push({ title, date, link });
@@ -583,8 +528,7 @@
             window.onload = () => {
                 loadData();
                 updateClocks();
-                renderCalendar();
-                renderEvents();
+                renderAll();
                 setupSpotify();
                 setInterval(updateClocks, 1000);
             };
