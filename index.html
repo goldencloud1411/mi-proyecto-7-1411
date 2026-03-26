@@ -29,19 +29,18 @@
             overflow-x: hidden;
         }
 
-        /* Contenedor de bloques con soporte para celular */
+        /* Ajuste de contenedores para la posición de los bloques */
         header {
             padding: var(--header-padding);
             display: flex;
-            flex-direction: column; /* Celular: uno arriba del otro */
+            flex-direction: column; /* Apilado en móvil */
             gap: 20px;
             border-bottom: 1px solid var(--bts-gray-border);
         }
 
-        /* En pantallas más anchas se ponen uno al lado del otro */
-        @media (min-width: 650px) {
+        @media (min-width: 600px) {
             header {
-                flex-direction: row;
+                flex-direction: row; /* Uno al lado del otro en desktop */
                 justify-content: space-between;
                 align-items: flex-start;
             }
@@ -55,39 +54,46 @@
             gap: 15px;
         }
 
+        /* Bloque 2: Relojes & Calendario */
+        .block-2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 350px;
+        }
+
+        /* Estilos originales del ZIP */
         .brand-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 900;
-            letter-spacing: -1.5px;
+            letter-spacing: -2px;
             line-height: 0.8;
             text-transform: uppercase;
         }
 
         .brand-header p {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: var(--bts-red);
             font-weight: 800;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
             margin-top: 5px;
         }
 
         .album-container {
             width: 100%;
-            max-width: 280px;
+            max-width: 300px;
             margin-top: 5px;
         }
 
         .album-art {
             width: 100%;
             aspect-ratio: 1/1;
-            background-color: #f0f0f0;
+            background-color: #eee;
             cursor: pointer;
-            transition: opacity 0.2s;
+            border-radius: 4px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--bts-gray-border);
+            display: block;
         }
 
         .album-art img {
@@ -98,7 +104,7 @@
 
         .spotify-controls {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             margin-top: 10px;
         }
 
@@ -106,101 +112,82 @@
             flex: 1;
             padding: 8px;
             font-size: 0.65rem;
-            font-weight: 700;
+            font-weight: bold;
             text-transform: uppercase;
             border: 1px solid var(--bts-black);
-            background: var(--bts-white);
+            background: white;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            color: var(--bts-black);
+            color: black;
         }
 
-        /* Bloque 2: Relojes y Calendario */
-        .block-2 {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            max-width: 320px;
-        }
-
-        .clocks-grid {
+        .clocks-container {
             display: flex;
             gap: 10px;
         }
 
-        .clock-card {
+        .clock-item {
             flex: 1;
             background: var(--bts-gray-light);
-            padding: 10px;
-            text-align: center;
+            padding: 12px;
             border-radius: 4px;
-        }
-
-        .clock-card.korea {
-            border-left: 3px solid var(--bts-red);
+            text-align: center;
         }
 
         .clock-label {
-            font-size: 0.55rem;
-            font-weight: 800;
+            font-size: 0.6rem;
+            font-weight: bold;
             color: var(--bts-text-muted);
             text-transform: uppercase;
             margin-bottom: 2px;
         }
 
         .clock-time {
-            font-size: 1.1rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
+            font-size: 1.3rem;
+            font-weight: 800;
         }
 
-        .calendar-box {
+        .mini-calendar {
             border: 1px solid var(--bts-gray-border);
-            padding: 12px;
-            background: var(--bts-white);
+            border-radius: 4px;
+            padding: 15px;
         }
 
-        .cal-month-title {
-            font-size: 0.75rem;
+        .calendar-title {
+            font-size: 0.8rem;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
+            gap: 4px;
             text-align: center;
         }
 
-        .cal-day-name {
-            font-size: 0.55rem;
-            font-weight: 800;
+        .day-header {
+            font-size: 0.6rem;
+            font-weight: bold;
             color: var(--bts-text-muted);
-            padding-bottom: 5px;
         }
 
-        .cal-day-num {
-            font-size: 0.7rem;
-            padding: 4px 0;
-            font-weight: 500;
+        .day-cell {
+            font-size: 0.75rem;
+            padding: 6px 0;
         }
 
-        .cal-day-num.today {
+        .day-cell.today {
             background: var(--bts-black);
-            color: var(--bts-white);
-            font-weight: 900;
+            color: white;
+            border-radius: 2px;
         }
 
-        /* Tabla de eventos y resto del contenido original */
-        .main-content {
-            padding: 20px;
-            flex: 1;
-        }
+        /* Main Content original */
+        .main-content { padding: 20px; }
 
         .table-header {
             display: grid;
@@ -208,7 +195,7 @@
             padding: 10px 0;
             border-bottom: 2px solid var(--bts-black);
             font-size: 0.7rem;
-            font-weight: 900;
+            font-weight: bold;
             text-transform: uppercase;
         }
 
@@ -217,20 +204,8 @@
             grid-template-columns: 80px 1fr 100px 60px;
             padding: 15px 0;
             border-bottom: 1px solid var(--bts-gray-border);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             align-items: center;
-        }
-
-        .add-btn {
-            background: var(--bts-black);
-            color: var(--bts-white);
-            padding: 12px;
-            width: 100%;
-            border: none;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 20px;
         }
 
         #event-form {
@@ -243,6 +218,18 @@
             border: 1px solid black;
             display: none;
             z-index: 100;
+        }
+
+        .add-btn {
+            background: black;
+            color: white;
+            padding: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            text-transform: uppercase;
         }
 
         .modal {
@@ -266,7 +253,7 @@
 <body>
 
     <header>
-        <!-- Bloque 1: Schedule / Spotify -->
+        <!-- Bloque 1: Schedule e Imagen/Reproductor -->
         <div class="block-1">
             <div class="brand-header">
                 <h1>Schedule</h1>
@@ -287,27 +274,27 @@
             </div>
         </div>
 
-        <!-- Bloque 2: Relojes / Calendario -->
+        <!-- Bloque 2: Relojes y Calendario -->
         <div class="block-2">
-            <div class="clocks-grid">
-                <div class="clock-card">
-                    <div class="clock-label">Perú (-5)</div>
+            <div class="clocks-container">
+                <div class="clock-item">
+                    <div class="clock-label">Perú</div>
                     <div id="pe-time" class="clock-time">00:00:00</div>
                 </div>
-                <div class="clock-card korea">
-                    <div class="clock-label">Korea (+9)</div>
+                <div class="clock-item">
+                    <div class="clock-label">Korea</div>
                     <div id="kr-time" class="clock-time">00:00:00</div>
                 </div>
             </div>
 
-            <div class="calendar-box">
-                <div class="cal-month-title" id="cal-month-title">MARZO 2024</div>
+            <div class="mini-calendar">
+                <div class="calendar-title" id="cal-month-title">MARZO 2024</div>
                 <div class="calendar-grid">
-                    <div class="cal-day-name">L</div><div class="cal-day-name">M</div><div class="cal-day-name">M</div>
-                    <div class="cal-day-name">J</div><div class="cal-day-name">V</div><div class="cal-day-name">S</div><div class="cal-day-name">D</div>
+                    <div class="day-header">L</div><div class="day-header">M</div><div class="day-header">M</div>
+                    <div class="day-header">J</div><div class="day-header">V</div><div class="day-header">S</div><div class="day-header">D</div>
                 </div>
                 <div id="cal-days" class="calendar-grid">
-                    <!-- Dinámico -->
+                    <!-- Los días se generan mediante script.js -->
                 </div>
             </div>
         </div>
@@ -318,30 +305,31 @@
             <div>Fecha</div>
             <div>Evento</div>
             <div>Horario</div>
-            <div style="text-align: right;">Acción</div>
+            <div style="text-align: right;">Ver</div>
         </div>
 
-        <div id="events-list"></div>
+        <div id="events-list">
+            <!-- Los eventos se generan mediante script.js -->
+        </div>
 
         <button id="btn-toggle-form" class="add-btn">+ Nuevo Evento</button>
 
         <div id="event-form">
-            <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;">Nuevo Evento</h3>
             <input type="hidden" id="edit-id">
-            <input type="text" id="in-title" placeholder="Nombre del Evento" style="width:100%; margin-bottom:10px; padding:8px;">
-            <input type="datetime-local" id="in-date" style="width:100%; margin-bottom:10px; padding:8px;">
-            <input type="url" id="in-link" placeholder="Link del Evento (opcional)" style="width:100%; margin-bottom:10px; padding:8px;">
-            <button id="btn-save" style="width:100%; background:black; color:white; padding:10px; border:none; font-weight:bold; cursor:pointer;">GUARDAR</button>
+            <input type="text" id="in-title" placeholder="Nombre del Evento" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
+            <input type="datetime-local" id="in-date" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
+            <input type="url" id="in-link" placeholder="Link del Evento (opcional)" style="width:100%; margin-bottom:10px; padding:10px; border:1px solid #ddd;">
+            <button id="btn-save" style="width:100%; background:black; color:white; padding:12px; border:none; font-weight:bold; cursor:pointer;">GUARDAR</button>
             <button id="btn-cancel" style="width:100%; background:none; border:none; padding:10px; cursor:pointer;">Cancelar</button>
         </div>
     </main>
 
     <div id="details-modal" class="modal">
         <div class="modal-content">
-            <h2 id="modal-title" style="margin-bottom:10px; text-transform: uppercase; font-size: 1.2rem;"></h2>
-            <p id="modal-date" style="color:var(--bts-text-muted); margin-bottom:20px; font-size: 0.85rem;"></p>
+            <h2 id="modal-title" style="margin-bottom:10px; text-transform: uppercase;"></h2>
+            <p id="modal-date" style="color:var(--bts-text-muted); margin-bottom:20px;"></p>
             <div id="modal-actions"></div>
-            <button id="modal-close" style="margin-top:20px; width:100%; padding:10px; background:#f0f0f0; border:none; font-weight:bold; cursor:pointer;">CERRAR</button>
+            <button id="modal-close" style="margin-top:20px; width:100%; padding:10px; background:#f0f0f0; border:none; font-weight:bold; cursor:pointer;">Cerrar</button>
         </div>
     </div>
 
