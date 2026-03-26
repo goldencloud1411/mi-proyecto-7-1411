@@ -13,7 +13,7 @@
             --bts-gray-light: #f6f6f6;
             --bts-gray-border: #e0e0e0;
             --bts-text-muted: #757575;
-            --header-padding: 15px;
+            --header-padding: 15px; /* Ajustado para móviles */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,14 +29,13 @@
             overflow-x: hidden;
         }
 
-        /* --- NUEVO HEADER ESTILO CELULAR --- */
+        /* --- HEADER ADAPTADO PARA MÓVIL --- */
         header {
             padding: var(--header-padding);
-            background: var(--bts-white);
-            border-bottom: 1px solid var(--bts-gray-border);
             display: flex;
             flex-direction: column;
             gap: 15px;
+            border-bottom: 1px solid var(--bts-gray-border);
         }
 
         .header-top {
@@ -44,10 +43,12 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
+            gap: 10px;
         }
 
         .logo-container img {
-            height: 35px;
+            height: 32px; /* Un poco más pequeño para que entre el reproductor */
+            width: auto;
             object-fit: contain;
         }
 
@@ -55,36 +56,39 @@
         .album-player {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: #f9f9f9;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 50px;
             border: 1px solid #eee;
             cursor: pointer;
+            max-width: 60%; /* Evita que empuje al logo */
         }
 
         .album-art {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 4px;
             object-fit: cover;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .album-info {
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .album-title {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: bold;
             color: #333;
-            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .album-status {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             color: var(--bts-red);
             font-weight: bold;
             text-transform: uppercase;
@@ -95,7 +99,7 @@
             display: flex;
             gap: 15px;
             justify-content: center;
-            padding: 5px 0;
+            width: 100%;
         }
 
         .clock-item {
@@ -104,34 +108,32 @@
             gap: 6px;
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .flag {
-            width: 20px;
-            height: 14px;
+            width: 18px;
+            height: 12px;
             object-fit: cover;
-            border-radius: 2px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border-radius: 1px;
         }
 
-        /* Calendario Ajustado */
+        /* Calendario - Asegurando que cuadre al 100% */
         .calendar-section {
             width: 100%;
             background: var(--bts-gray-light);
             border-radius: 12px;
-            padding: 10px;
+            padding: 12px;
         }
 
         .cal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: bold;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.75rem;
         }
 
         .calendar-grid {
@@ -145,6 +147,7 @@
             font-size: 0.6rem;
             color: var(--bts-text-muted);
             padding-bottom: 5px;
+            font-weight: bold;
         }
 
         .cal-day {
@@ -152,17 +155,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             border-radius: 4px;
-            transition: 0.2s;
         }
 
-        .cal-day:hover { background: #e0e0e0; }
         .cal-day.today { background: var(--bts-red); color: white; font-weight: bold; }
         .cal-day.has-event { border-bottom: 2px solid var(--bts-red); }
 
-        /* Contenido Principal */
+        /* --- CONTENIDO PRINCIPAL --- */
         .main-content {
             flex: 1;
             padding: 15px;
@@ -170,24 +171,23 @@
 
         .table-header {
             display: grid;
-            grid-template-columns: 70px 1fr 70px 50px;
-            padding: 10px 0;
+            grid-template-columns: 60px 1fr 65px 45px;
+            padding: 8px 0;
             border-bottom: 2px solid var(--bts-black);
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
         }
 
         .event-row {
             display: grid;
-            grid-template-columns: 70px 1fr 70px 50px;
-            padding: 12px 0;
+            grid-template-columns: 60px 1fr 65px 45px;
+            padding: 10px 0;
             border-bottom: 1px solid var(--bts-gray-border);
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
-        /* Estilos de botones y formularios (se mantienen los tuyos) */
         .add-btn {
             background: var(--bts-black);
             color: white;
@@ -198,25 +198,27 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 15px;
+            font-size: 0.9rem;
         }
 
+        /* Modales y Formularios */
         .modal {
             display: none;
             position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 15px;
         }
 
         .modal-content {
             background: white;
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 12px;
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
         }
 
         #event-form {
@@ -230,24 +232,24 @@
 
         input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 0.9rem;
         }
 
-        .save-btn { background: #000; color: #fff; border: none; padding: 10px; width: 100%; border-radius: 4px; }
-        .cancel-btn { background: #eee; border: none; padding: 10px; width: 100%; margin-top: 5px; border-radius: 4px; }
+        .save-btn { background: #000; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 6px; }
+        .cancel-btn { background: #eee; border: none; padding: 12px; width: 100%; margin-top: 5px; border-radius: 6px; }
 
     </style>
 </head>
 <body>
 
     <header>
-        <!-- Fila Superior: Logo y Reproductor -->
+        <!-- Logo y Reproductor en una fila que no se rompe -->
         <div class="header-top">
             <div class="logo-container">
-                <!-- Usando el logo de Arirang de tus archivos -->
                 <img src="arirang logo.png" alt="Arirang Logo">
             </div>
             
@@ -260,7 +262,7 @@
             </div>
         </div>
 
-        <!-- Fila de Relojes con Banderas -->
+        <!-- Relojes centrados -->
         <div class="clocks-container">
             <div class="clock-item">
                 <img src="https://flagcdn.com/w40/pe.png" class="flag" alt="PE">
@@ -272,13 +274,13 @@
             </div>
         </div>
 
-        <!-- Sección Calendario -->
+        <!-- Calendario que ocupa todo el ancho -->
         <div class="calendar-section">
             <div class="cal-header">
                 <span id="cal-month">Marzo 2024</span>
-                <div style="display: flex; gap: 10px;">
-                    <span id="prev-month" style="cursor:pointer">❮</span>
-                    <span id="next-month" style="cursor:pointer">❯</span>
+                <div style="display: flex; gap: 15px;">
+                    <span id="prev-month" style="cursor:pointer; padding: 5px;">❮</span>
+                    <span id="next-month" style="cursor:pointer; padding: 5px;">❯</span>
                 </div>
             </div>
             <div class="calendar-grid">
@@ -303,7 +305,7 @@
         </div>
 
         <div id="events-list">
-            <!-- Eventos cargados por script.js -->
+            <!-- Eventos generados por script.js -->
         </div>
 
         <button id="btn-toggle-form" class="add-btn">+ NUEVO EVENTO</button>
@@ -318,7 +320,6 @@
         </div>
     </main>
 
-    <!-- Modal de Detalles -->
     <div id="details-modal" class="modal">
         <div class="modal-content">
             <div id="modal-body"></div>
