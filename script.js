@@ -27,6 +27,7 @@
     // Función para manejar el reproductor de Spotify configurable
     const setupSpotifyPlayer = () => {
         const container = document.querySelector('.album-container');
+        const mediaBlock = document.querySelector('.media-block');
         if (!container) return;
 
         const SPOTIFY_URL_KEY = 'bts_pro_spotify';
@@ -51,6 +52,7 @@
         };
 
         renderControls(savedSpotifyUrl);
+        if (mediaBlock) mediaBlock.classList.remove('is-player-active');
 
         container.addEventListener('click', function() {
             if (document.getElementById('spotify-player')) return; 
@@ -81,6 +83,7 @@
 
             container.innerHTML = '';
             container.appendChild(iframe);
+            if (mediaBlock) mediaBlock.classList.add('is-player-active');
             
             // Re-renderizar controles debajo del iframe
             renderControls(savedSpotifyUrl);
